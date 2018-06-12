@@ -1,0 +1,55 @@
+{% if pagination.total_page %}
+    <ul class="pagination">
+    {% if pagination.page %}
+            <span style="color: #20A8D8;float: left;font-size: 14px;margin-right: 20px;margin-top: 5px" >共{{ pagination.total_page }}页({{ pagination.total }}条)</span>
+    {% endif %}
+        <li><a href="#" onclick="page_data(1)">首页</a></li>
+        <li><a href="#" id="page_before" onclick= "{% if pagination.page > 1 %} page_data({{ pagination.page - 1 }}) {% else %} page_data({{ pagination.page }}) {% endif %}">上页</a></li>
+        {% for page in range(pagination.total_page) %}
+            {% if pagination.page - loop.index <= 2 and loop.index - pagination.page <= 2 %}
+                {% if loop.index == pagination.page %}
+                    <li class="active" id="page_{{ loop.index }}" name="page_elem" style="display: none">
+                      <a href="#"  onclick="page_data({{ loop.index }})">{{ loop.index }}</a>
+                    </li>
+                {% else %}
+                    <li id="page_{{ loop.index }}" name="page_elem" style="display: none"><a href="#" onclick="page_data({{ loop.index }})">{{ loop.index }}</a></li>
+                {% endif %}
+            {% else %}
+                <li id="page_{{ loop.index }}" name="page_elem" style="display: none"><a href="#" onclick="page_data({{ loop.index }})">{{ loop.index }}</a></li>
+            {% endif %}
+        {% endfor %}
+        <li><a href="#" id="page_next" onclick= "{% if pagination.page < pagination.total_page %} page_data({{ pagination.page + 1 }}) {% else %} page_data({{ pagination.page }}) {% endif %}">下页</a></li>
+        <li><a href="#" onclick="page_data({{ pagination.total_page }})">末页</a></li>
+
+        <div class="input-group col-md-2" style="padding-left: 20px">
+            <input type="text" id="page_go" name="page_go" onmouseout="addToJump()" class="form-control" value="" placeholder="">
+            <input type="text" id="total_page" value="{{ pagination.total_page }}" hidden>
+
+            <span class="input-group-btn">
+                <button type="button" id="page_jump_go" class="btn btn-primary"><i class="fa fa-arrow-right"></i>
+{#                    页面跳转 要跳转的页面《 total_page  jump #}
+                    <a id="jump_page" href="#" onclick="page_data(1)" style="color: white">跳转</a>
+                </button>
+            </span>
+        </div>
+
+
+
+    </ul>
+{% endif %}
+{% block js %}
+    <script type="text/javascript">
+        function addToJump(){
+            var page_num = $('#page_go').val();
+            var total_page = $("#total_page").val();
+            if(isNaN(page_num)){
+                alert('请输入数字！！！');
+            }else{
+                if (parseInt(page_num) <= parseInt(total_page) && parseInt(page_num) >= 1) {
+                    $("#jump_page").attr('onclick', "page_data("+ page_num +")")
+                }
+            }
+            
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,198 @@
+{% extends "footer.html" %}
+{% block title %} 运营管理 {% endblock %}
+{% block content %}
+    <div class="main sidebar-minified">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="page-header"><i class="fa fa-table"></i>Banner</h4>
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="/">Home</a></li>
+                    <li><i class="fa fa-table"></i>Banner</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2><i class="fa fa-table red"></i><span class="break"></span><strong>Banner列表</strong></h2>
+                        <div class="panel-actions">
+                            {#								<a href="table.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>#}
+                            <a href="/get_banner_details"><i class="fa fa-plus"></i></a>
+                            <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                            {#								<a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>#}
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        {% if 73 in g.user.get_permission() %}
+                            <form action="" method="post" class="form-horizontal ">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-1 " for="banner_type">banner类型</label>
+                                    <select id="banner_type" name="banner_type" class="form-control col-sm-1"
+                                            style="margin-left: 13px; width: 20%">
+                                        <option value="">请选择</option>
+                                        <option value="0" {% if params.banner_type == "0" %} selected {% endif %}>动态
+                                        </option>
+                                        <option value="3" {% if params.banner_type == "3" %} selected {% endif %}>
+                                            超级经济人
+                                        </option>
+                                        <option value="4" {% if params.banner_type == '4' %} selected {% endif %}>签到图片
+                                        </option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" style="float: right"><i
+                                            class="fa fa-search"></i> 查询
+                                    </button>
+                                </div>
+                            </form>
+                        {% endif %}
+                        <button class="btn btn-success" style="float: right;margin-left: 10px;margin-bottom: 10px"
+                                onclick="save_weight()"><i class="fa fa-save"></i> 保存权重
+                        </button>
+                        <table class="table table-striped table-bordered bootstrap-datatable datatable" id="table_data"
+                               style="table-layout:fixed;">
+
+                            <thead>
+                            <tr>
+                                <th style="width: 10%;">BannerID</th>
+                                <th style="width: 15%;">图片路径</th>
+                                <th style="width: 15%;">跳转路径</th>
+                                <th style="width: 15%">类型</th>
+                                <th style="width: 10%">权重</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        {% include "pagination_async.html" %}
+                    </div>
+                </div>
+            </div><!--/col-->
+
+        </div><!--/row-->
+    </div>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+        $('.form_date').datetimepicker({
+            language: 'en',
+            weekStart: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3,
+            minView: 3,
+            forceParse: 0
+        });
+        function page_data(page) {
+            var start_time = $("#start_time").val();
+            var end_time = $("#end_time").val();
+
+            url = '/banner_list_data';
+            var params = {};
+            params['start_time'] = start_time;
+            params['end_time'] = end_time;
+            params['page'] = page;
+            $.post(url, params, function (res) {
+                var banner_list = res['banner_list'];
+                {#                var sumgroup = res['sumgroup'];#}
+                var html = '';
+                {#                 if (sum_html == "") {#}
+                {#                    sum_html += '<tr>';#}
+                {#                    sum_html += '<td>' + "汇总" + '</td>';#}
+                {#                    sum_html += '<td>' + sumgroup['interest'] + '</td>';#}
+                {#                    sum_html += '<td>' + sumgroup['subrate'] + '</td>';#}
+                {#                    sum_html += '<td>' + sumgroup['commission'] + '</td>';#}
+                {#                    sum_html += '<td>' + sumgroup['resubrate'] + '</td>';#}
+                {#                    sum_html += '<td>' + sumgroup['redpay'] + '</td>';#}
+                {#                    sum_html += '<td>' + sumgroup['recharge_fee'] + '</td>';#}
+                {#                }#}
+                for (var i = 0; i < banner_list.length; i++) {
+                    html += '<tr>';
+                    html += '<td id="banner_id_'+banner_list[i]['id']+'">' + banner_list[i]['id'] + '</td>';
+                    html += '<td style="word-wrap:break-word;word-break:break-all;"><a style="cursor:pointer" target="_blank" href="' + banner_list[i]['pic'] + '">' + banner_list[i]['pic'] + '</td>';
+                    html += '<td style="word-wrap:break-word;word-break:break-all;"><a style="cursor:pointer" target="_blank" href="' + banner_list[i]['url'] + '">' + banner_list[i]['url'] + '</td>';
+                    if (banner_list[i]['btype'] == 0){
+                        html += '<td>首页</td>';
+                    }else{
+                        html += '<td>其他</td>';
+                    }
+                    html += '<td><input type="text" id="weight_' + banner_list[i]['id'] + '" value="' + banner_list[i]['weight'] + '" style="width: 40%" </td>';
+                    html += '<td>';
+                    if (banner_list[i]['status'] == 1) {
+                        html += '<span style="color:green">显示</span>'
+                    } else {
+                        html += '<span style="color:red">隐藏</span>'
+                    }
+                    html += '</td>';
+                    html += "<td>";
+                    if (banner_list[i]["status"] == "1") {
+                        html += '<a class="btn btn-success" href="#" title="隐藏" onclick="update_banner_status(' + banner_list[i]['id'] + ',2)"> <i class="fa fa-eye-slash"></i></a>'
+                    } else if (banner_list[i]["status"] == "2") {
+                        html += '<a class="btn btn-success" href="#" title="显示" onclick="update_banner_status(' + banner_list[i]['id'] + ',1)"> <i class="fa fa-eye"></i></a>'
+                    }
+                    html += '<a class="btn btn-danger" style="margin-left:10px" href="#" title="删除" onclick="del_banner(' + banner_list[i]['id'] + ')"> <i class="fa fa-trash-o "></i></a>';
+                    html += '<a class="btn btn-info" style="margin-left:10px" href="/get_banner_details?banner_id=' + banner_list[i]['id'] + '" title="删除"> <i class="fa fa-edit "></i></a>';
+                    html += '</td>';
+                    html += '</tr>';
+
+                }
+                $("#table_data tbody").html(html);
+                page_operation(page, {{ pagination.total_page }});
+
+            })
+        }
+        $(document).on('ready', function () {
+            page_data(1);
+        });
+        function save_weight() {
+            var _list = [];
+            ids = $("td[id^='banner_id_']").each(function () {
+                _id = $(this).text();
+                var weight = $("#weight_" + _id).val();
+                _list.push({"_id": _id, "weight": weight});
+            });
+            console.log(param);
+            var param = JSON.stringify(_list);
+            $.post("/update_banner_weight", {"param": param}, function (msg) {
+                alert(msg.message);
+                if (msg.status) {
+                    location.reload();
+                }
+            });
+        }
+
+        function del_banner(_id) {
+            if (confirm("确定删除吗?")) {
+                $.post("/del_banner", {"id": _id}, function (result) {
+                    alert(result.message);
+                    location.reload();
+                });
+            } else {
+                return false;
+            }
+        }
+
+
+        function update_banner_status(_id, _status) {
+            if (_status == 1) {
+                msg = '确认显示吗？';
+            } else if (_status == 2) {
+                msg = '确认隐藏吗？';
+            }
+            if (confirm(msg)) {
+                $.post('/update_banner_status', {'id': _id, 'status': _status}, function (result) {
+                    alert(result.message);
+                    location.reload()
+                });
+            } else {
+                return false
+            }
+        }
+    </script>
+{% endblock %}

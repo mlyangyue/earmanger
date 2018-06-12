@@ -1,0 +1,102 @@
+{% extends "footer.html" %}
+{% block title %} 运营管理 {% endblock %}
+
+{% block content %}
+    <style>
+        .radio, .checkbox {
+            display: inline-block;
+        }
+    </style>
+    <div class="main sidebar-minified">
+    <div class="row">
+        <div class="col-lg-12">
+            <h4 class="page-header"><i class="fa fa-table"></i>新闻</h4>
+            <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/">Home</a></li>
+                <li><i class="fa fa-table"></i>相关推荐</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2><i class="fa fa-indent red"></i><strong>新闻信息</strong></h2>
+                </div>
+                <input id="news_id" value="{{ news_id }}" hidden>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-md-1 control-label">相关推荐</label>
+                        {#                        <div class="row">#}
+                        <div class="col-xs-4">
+                            <select name="from" id="multiselect" class="form-control" size="16" multiple="multiple">
+                                {% for entry in all_news_list %}
+                                    <option value="{{ entry.id }}">{{ entry.id }}:{{ entry.title }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" id="multiselect_rightAll" class="btn btn-block"><i
+                                    class="glyphicon glyphicon-forward"></i></button>
+                            <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i
+                                    class="glyphicon glyphicon-chevron-right"></i></button>
+                            <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i
+                                    class="glyphicon glyphicon-chevron-left"></i></button>
+                            <button type="button" id="multiselect_leftAll" class="btn btn-block"><i
+                                    class="glyphicon glyphicon-backward"></i></button>
+                        </div>
+
+                        <div class="col-xs-4">
+                            <select name="to" id="multiselect_to" class="form-control" size="16" multiple="multiple">
+                                {% for entry in all_news_list %}
+                                    {% if entry.id in news_list %}
+                                        <option value="{{ entry.id }}">{{ entry.id }}:{{ entry.title }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {#                        </div>#}
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="botton" class="btn btn-sm btn-primary" onclick="save_all()"><i
+                            class="fa fa-dot-circle-o"></i> 确定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+
+
+{% endblock %}
+{% block js %}
+    <script src="/static/js/multiselect.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('#multiselect').multiselect();
+        });
+
+        function save_all() {
+            var news_id = $("#news_id").val();
+            var mult = [];
+            $("#multiselect_to option").each(function () {
+                        mult.push($(this).val());
+                    }
+            );
+            var params = {};
+            params['news_id'] = news_id;
+            params["mult"] = JSON.stringify(mult);
+
+            console.log(params);
+            $.post("/save_recommend_fixed", params, function (msg) {
+                alert(msg.message);
+                if (msg.status) {
+                    window.location.href = document.referrer;
+                }
+
+            })
+        }
+    </script>
+{% endblock %}

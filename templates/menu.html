@@ -1,0 +1,713 @@
+{% extends "body_header.html" %}
+
+{% block menus %}
+    <div class="row">
+
+        <!-- start: Main Menu -->
+        <div class="sidebar ">
+
+            <div class="sidebar-collapse">
+                <div class="sidebar-header t-center">
+                    <span><img class="text-logo" style="width: 138px" src="static/img/logo1.png"></span>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="nav nav-sidebar" style="overflow:auto">
+                        {% if 91 in g.user.get_permission() %}
+                            <li>
+                                <a href="#"><i class="fa fa-dashboard"></i><span class="text"> 系统管理 </span> <span
+                                        class="fa fa-angle-down pull-right"></span></a>
+                                <ul class="nav sub">
+                                    {% if 1 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-sitemap"></i><span class="text"> 权限管理 </span>
+                                                <span class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 4 in g.user.get_permission() %}
+                                                    <li><a href="/user_role"><i class="fa fa-user-md"></i><span
+                                                            class="text"> 角色权限管理 </span></a></li>
+                                                {% endif %}
+                                                {% if 5 in g.user.get_permission() %}
+                                                    <li><a href="/user_backend_user"><i class="fa fa-user-md"></i><span
+                                                            class="text"> 用户权限管理 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            {% if 157 in g.user.get_permission() %}
+                                                <a href="#"><i class="fa fa-gears"></i><span
+                                                        class="text"> 系统参数设置 </span> <span
+                                                        class="fa fa-angle-down pull-right"></span></a>
+                                                <ul class="nav sub">
+                                                    {% if 158 in g.user.get_permission() %}
+                                                        <li><a href="/recharge_switch_settings"><i class="fa fa-gear"></i>
+                                                            <span class="text"> 充值通道设置 </span>
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                    <li><a href="/get_phone_parameter_list"><i
+                                                            class="fa fa-sun-o"></i><span
+                                                            class="text"> 手机参数设置 </span></a></li>
+                                                    <li><a href="/get_invite_switch"><i class="fa fa-mobile"></i><span
+                                                            class="text"> 客户端参数设置 </span></a></li>
+                                                </ul>
+                                                </li>
+                                            {% endif %}
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if 92 in g.user.get_permission() %}
+                            <li>
+                                <a href="#"><i class="fa  fa-inbox"></i><span class="text"> 运营管理 </span> <span
+                                        class="fa fa-angle-down pull-right"></span></a>
+                                <ul class="nav sub">
+                                    {% if 49 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-user"></i><span class="text"> 用户管理 </span> <span
+                                                    class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 50 in g.user.get_permission() %}
+                                                    <li><a href="/get_user_user_list"><i
+                                                            class="fa fa-align-justify"></i><span
+                                                            class="text"> 用户列表 </span></a></li>
+                                                {% endif %}
+                                                {% if 69 in g.user.get_permission() %}
+                                                    <li><a href="/get_user_data"><i class="fa  fa-meh-o"></i><span
+                                                            class="text"> 用户数据 </span></a></li>
+                                                {% endif %}
+                                                {% if 84 in g.user.get_permission() %}
+                                                    <li><a href="/get_user_statistics"><i
+                                                            class="fa fa-smile-o"></i><span
+                                                            class="text"> 用户统计 </span></a></li>
+                                                {% endif %}
+                                                {% if 140 in g.user.get_permission() %}
+                                                    <li><a href="/get_sns_statistic"><i
+                                                            class="fa fa-chain-broken"></i><span
+                                                            class="text"> 交互数据 </span></a></li>
+                                                {% endif %}
+                                                {% if 154 in g.user.get_permission() %}
+                                                    <li><a href="/user_free_yj_fee"><i class="fa fa-clock-o"></i><span
+                                                            class="text"> 免佣操作 </span></a></li>
+                                                {% endif %}
+                                                {% if 206 in g.user.get_permission() %}
+                                                    <li><a href="/user_free_administrative_fee"><i class="fa fa-gift"></i><span class="text">
+
+                                                     免行政费 </span></a></li>
+                                                {% endif %}
+                                                {% if 155 in g.user.get_permission() %}
+                                                    <li><a href="/user_free_interest"><i class="fa fa-meh-o"></i><span
+                                                            class="text"> 免息操作 </span></a></li>
+                                                {% endif %}
+                                                {% if 156 in g.user.get_permission() %}
+                                                    <li><a href="/get_user_free_list"><i class="fa fa-cogs"></i><span
+                                                            class="text"> 免佣金免息列表 </span></a></li>
+                                                {% endif %}
+                                                {% if 181 in g.user.get_permission() %}
+                                                    <li><a href="/get_unlimit_user_list"><i
+                                                            class="fa fa-unlock"></i><span
+                                                            class="text"> 大客户操作 </span></a></li>
+                                                {% endif %}
+
+
+                                                <li><a href="/get_forbid_login_user_list"><i class="fa fa-times"></i><span
+                                                    class="text"> 禁登用户列表 </span></a></li>
+                                                <li><a href="/get_forbid_user_log_list"><i class="fa fa-times"></i><span
+                                                    class="text"> 禁登用户日志 </span></a></li>
+
+                                                {#                                                {% if 182 in g.user.get_permission() %}#}
+                                                {#                                                    <li><a href="/export_user_info"><i#}
+                                                {#                                                            class="fa fa-arrow-down"></i><span#}
+                                                {#                                                            class="text"> 导出用户 </span></a></li>#}
+                                                {#                                                {% endif %}#}
+                                                {#                                                <li><a href="/get_holiday_list"><i class="fa fa-cutlery"></i><span#}
+                                                {#                                                        class="text"> 节假日列表 </span></a></li>#}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 3 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa  fa-dollar"></i><span class="text"> 汇率 </span>
+                                                <span class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 8 in g.user.get_permission() %}
+                                                    <li><a href="/fin_rate"><i class="fa fa-yen"></i><span class="text"> 汇率管理 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 26 in g.user.get_permission() %}
+                                                    <li><a href="/balance_rate_list"><i class="fa fa-yen"></i><span
+                                                            class="text"> 结算汇率日志 </span></a></li>
+                                                    <li><a href="/recharge_rate_list"><i class="fa fa-yen"></i><span
+                                                            class="text"> 充值汇率日志 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 27 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-file-text"></i><span class="text"> 股票管理 </span>
+                                                <span class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 28 in g.user.get_permission() %}
+                                                    <li><a href="/get_stock_list"><i class="fa fa-indent"></i><span
+                                                            class="text"> 导入股票 </span></a></li>
+                                                {% endif %}
+                                                {% if 103 in g.user.get_permission() %}
+                                                    <li><a href="/get_regist_profit"><i class="fa fa-ruble"></i><span
+                                                            class="text"> 港股待分红股票 </span></a></li>
+                                                {% endif %}
+                                                {% if 104 in g.user.get_permission() %}
+                                                    <li><a href="/get_payable_profit"><i class="fa fa-krw"></i><span
+                                                            class="text"> 综合分红送股信息 </span></a></li>
+                                                {% endif %}
+                                                {% if 105 in g.user.get_permission() %}
+                                                    <li><a href="/get_hk_regist_profit"><i
+                                                            class="fa fa-puzzle-piece"></i><span
+                                                            class="text"> 港股分红信息 </span></a></li>
+                                                {% endif %}
+                                                {% if 106 in g.user.get_permission() %}
+                                                    <li><a href="/add_regist_profit"><i
+                                                            class="fa fa-subscript"></i><span
+                                                            class="text"> 港股添加分红信息 </span></a></li>
+                                                {% endif %}
+                                                {% if 113 in g.user.get_permission() %}
+                                                    <li><a href="/process_odd_lot_stock"><i
+                                                            class="fa fa-asterisk"></i><span class="text"> 碎股处理 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 114 in g.user.get_permission() %}
+                                                    <li><a href="/process_split_stock"><i
+                                                            class="fa fa-arrows-alt"></i><span class="text">拆/合股 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 115 in g.user.get_permission() %}
+                                                    <li><a href="/process_fronzen_stock"><i class="fa fa-cogs"></i><span
+                                                            class="text">冻结/解冻 </span></a></li>
+                                                {% endif %}
+                                                {% if 151 in g.user.get_permission() %}
+                                                    <li><a href="/process_change_stock_code"><i
+                                                            class="fa fa-random"></i><span
+                                                            class="text">股票代码转换 </span></a></li>
+                                                {% endif %}
+                                                <li><a href="/get_stock_info"><i class="fa fa-fire"></i><span
+                                                        class="text">股票详情</span></a></li>
+                                            </ul>
+
+                                        </li>
+                                    {% endif %}
+                                    {% if 43 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-umbrella"></i><span class="text"> 风控管理 </span>
+                                                <span class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 44 in g.user.get_permission() %}
+                                                    <li><a href="/get_risk_list"><i class="fa fa-list-alt"></i><span
+                                                            class="text"> 用户风控信息 </span></a></li>
+                                                {% endif %}
+                                                {% if 45 in g.user.get_permission() %}
+                                                    <li><a href="/get_risk_deal"><i class="fa fa-bolt"></i><span
+                                                            class="text"> 用户风控处理 </span></a></li>
+                                                {% endif %}
+                                                {% if 45 in g.user.get_permission() %}
+                                                    <li><a href="/get_risk_dealing_list"><i
+                                                            class="fa fa-dedent"></i><span class="text"> 平仓中的用户 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 45 in g.user.get_permission() %}
+                                                    <li><a href="/get_today_force_sell_failed_list"><i
+                                                            class="fa fa-arrow-circle-o-right"></i><span class="text"> 今日平仓订单 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 45 in g.user.get_permission() %}
+                                                    <li><a href="/get_force_sell_list"><i class="fa fa-header"></i><span
+                                                            class="text"> 历史平仓订单 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 71 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-pencil-square"></i><span
+                                                    class="text"> 内容管理 </span><span
+                                                    class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                <li>
+                                                    {% if 72 in g.user.get_permission() %}
+                                                        <li><a href="/get_banner_list"><i
+                                                                class="fa fa-pencil-square"></i><span class="text"> Banner </span></a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% if 77 in g.user.get_permission() %}
+                                                    <li><a href="/get_news_list"><i class="fa fa-rss-square"></i><span
+                                                            class="text"> 公告 </span></a></li>
+                                                {% endif %}
+                                                {% if 147 in g.user.get_permission() %}
+                                                    <li><a href="/get_broadcast_type_list"><i
+                                                            class="fa fa-microphone"></i><span
+                                                            class="text"> 今日播报 </span></a></li>
+                                                {% endif %}
+                                                {% if 153 in g.user.get_permission() %}
+                                                    <li><a href="/get_user_fans"><i class="fa fa-users"></i><span
+                                                            class="text"> 粉丝服务</span></a></li>
+                                                {% endif %}
+                                                <li><a href="get_personal_info_list"><i class="fa fa-user-md"></i><span
+                                                        class="text">个人消息</span></a></li>
+                                                {% if 183 in g.user.get_permission() %}
+                                                    <li><a href="/get_push_message_list"><i
+                                                            class="fa fa-plane"></i><span class="text"> 消息推送 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 185 in g.user.get_permission() %}
+                                                    <li><a href="/get_industry_list"><i
+                                                            class="fa fa-camera-retro fa-lg"></i><span
+                                                            class="text"> 行业颜色 </span></a></li>
+                                                    </li>
+                                                {% endif %}
+                                                <li><a href="/get_market_info_list"><i
+                                                        class="fa fa-signal"></i><span
+                                                        class="text"> 大盘信息列表 </span></a></li>
+                                                {% if 207 in g.user.get_permission() %}
+                                                <li><a href="/search_notice_news"><i
+                                                    class="fa fa-hacker-news"></i><span class="text">
+                                                     新闻消息 </span></a>
+                                                </li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 121 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-envelope-o"></i><span class="text"> 短信管理 </span><span
+                                                    class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                <li>
+                                                    {% if 122 in g.user.get_permission() %}
+                                                        <li><a href="/sms_send_page"><i class="fa fa-pencil-square"></i><span
+                                                                class="text"> 短信发送 </span></a></li>
+                                                    {% endif %}
+                                                {% if 123 in g.user.get_permission() %}
+                                                    <li><a href="/sms_history"><i class="fa fa-list"></i><span
+                                                            class="text"> 历史短信 </span></a></li>
+                                                {% endif %}
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 133 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-dedent"></i><span class="text"> 费用 </span><span
+                                                    class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                <li>
+                                                    {% if 134 in g.user.get_permission() %}
+                                                        <li><a href="/cost_diff_all"><i
+                                                                class="fa fa-delicious"></i><span
+                                                                class="text"> 汇差汇总 </span></a></li>
+                                                    {% endif %}
+                                                </li>
+                                                <li>
+                                                    {% if 135 in g.user.get_permission() %}
+                                                        <li><a href="/cost_diff_detail"><i
+                                                                class="fa fa-stack-exchange"></i><span class="text"> 汇差查询 </span></a>
+                                                        </li>
+                                                    {% endif %}
+                                                </li>
+                                                <li>
+                                                <li><a href="/user_return_yj_fee"><i class="fa fa-cogs"></i><span
+                                                        class="text"> 佣金返还 </span></a></li>
+
+                                                </li>
+                                                <li>
+                                                <li><a href="/user_free_day_count"><i class="fa fa-phone"></i><span
+                                                        class="text"> 免息免佣统计 </span></a></li>
+
+                                                </li>
+
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 189 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-shield"></i><span
+                                                    class="text"> 组合管理 </span><span
+                                                    class="fa fa-angle-down pull-right"></span>
+                                            </a>
+                                            <ul class="nav sub">
+                                                {% if 187 in g.user.get_permission() %}
+                                                    <li><a href="/get_user_quants_list"><i
+                                                            class="fa fa-puzzle-piece"></i>
+                                                        <span class="text"> 用户组合信息 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 190 in g.user.get_permission() %}
+                                                    <li><a href="/user_group_info_list"><i
+                                                            class="fa fa-dropbox"></i><span
+                                                            class="text"> 首页推荐组合 </span></a></li>
+                                                {% endif %}
+                                                {% if 184 in g.user.get_permission() %}
+                                                    <li><a href="/quants_info_list"><i class="fa fa-cubes"></i><span
+                                                            class="text"> 组合信息管理 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+
+
+                                        </li>
+                                    {% endif %}
+                                    {% if 130 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-clock-o"></i><span
+                                                    class="text"> 股票交易市场 </span><span
+                                                    class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                <li>
+                                                    {% if 131 in g.user.get_permission() %}
+                                                        <li><a href="/stock_exchange"><i class="fa  fa-exclamation"></i><span
+                                                                class="text"> 股票交易市场管理 </span></a></li>
+                                                    {% endif %}
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+
+                                </ul>
+
+                            </li>
+                        {% endif %}
+                        {% if 93 in g.user.get_permission() %}
+                            <li>
+                                <a href="#"><i class="fa  fa-cny"></i><span class="text"> 财务管理 </span> <span
+                                        class="fa fa-angle-down pull-right"></span></a>
+                                <ul class="nav sub">
+                                    {% if 96 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-dollar"></i><span class="text"> 财务管理 </span>
+                                                <span class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 82 in g.user.get_permission() %}
+                                                    <li><a href="/get_finance_statistics"><i class="fa fa-cny"></i><span
+                                                            class="text"> 财务统计 </span></a></li>
+                                                {% endif %}
+                                                {% if 101 in g.user.get_permission() %}
+                                                    <li><a href="/get_finance_data"><i class="fa fa-money"></i><span
+                                                            class="text"> 资金管理 </span></a></li>
+                                                {% endif %}
+                                                {% if 141 in g.user.get_permission() %}
+                                                    <li><a href="/get_account_info"><i class="fa fa-file-text"></i><span
+                                                            class="text"> 账户管理 </span></a></li>
+                                                {% endif %}
+                                                {% if 205 in g.user.get_permission() %}
+                                                    <li><a href="/stockholders_finance"><i class="fa fa-file-text"></i><span
+                                                            class="text"> 股东资本管理 </span></a></li>
+                                                {% endif %}
+                                                {% if 162 in g.user.get_permission() %}
+                                                    <li><a href="/get_finance_daily_data"><i
+                                                            class="fa fa-road"></i><span class="text"> 财务日报 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 191 in g.user.get_permission() %}
+                                                    <li><a href="/user_fee_statis_daily"><i
+                                                            class="fa fa-adn"></i><span class="text"> 用户费用日报 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 193 in g.user.get_permission() %}
+                                                    <li><a href="/account_finance_monthly"><i
+                                                            class="fa fa-empire"></i><span class="text"> 账户财务月报 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 186 in g.user.get_permission() %}
+                                                    <li><a href="/get_fund_account_log"><i
+                                                            class="fa fa-adjust"></i><span class="text"> 大账号操作日志 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    <li>
+                                        {% if 167 in g.user.get_permission() %}
+                                            <a href="#"><i class="fa fa-plus"></i><span class="text"> 充值信息 </span> <span
+                                                    class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 160 in g.user.get_permission() %}
+                                                    <li><a href="/get_inner_recharge_list"><i
+                                                            class="fa fa-file-text"></i><span
+                                                            class="text"> 内部充值信息 </span></a></li>
+                                                {% endif %}
+                                                {% if 168 in g.user.get_permission() %}
+                                                    <li><a href="/get_user_recharge_info"><i
+                                                            class="fa fa-money"></i><span
+                                                            class="text"> 用户充值方式 </span></a></li>
+                                                {% endif %}
+                                                {% if 188 in g.user.get_permission() %}
+                                                    <li><a href="/fm_recharge_voucher"><i
+                                                            class="fa fa-money"></i><span
+                                                            class="text"> 富明充值凭证 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if 94 in g.user.get_permission() %}
+                            <li>
+                                <a href="#"><i class="fa  fa-phone"></i><span class="text"> 客服管理 </span> <span
+                                        class="fa fa-angle-down pull-right"></span></a>
+                                <ul class="nav sub">
+                                    {% if 58 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-exchange"></i><span class="text"> 交易 </span>
+                                                <span class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 59 in g.user.get_permission() %}
+                                                    <li><a href="/get_user_order"><i class="fa fa-list-alt"></i><span
+                                                            class="text"> 委托 </span></a></li>
+                                                {% endif %}
+                                                {% if 60 in g.user.get_permission() %}
+                                                    <li><a href="/get_user_stock_trade"><i class="fa fa-gavel"></i><span
+                                                            class="text"> 成交 </span></a></li>
+                                                {% endif %}
+                                                {% if 61 in g.user.get_permission() %}
+                                                    <li><a href="/get_user_stock_position"><i
+                                                            class="fa fa-briefcase"></i><span
+                                                            class="text"> 持仓 </span></a></li>
+                                                {% endif %}
+                                                {% if 204 in g.user.get_permission() %}
+                                                <li><a href="/user_stock_now_count_position"><i
+                                                    class="fa fa-briefcase"></i><span
+                                                    class="text"> 持仓统计 </span></a></li>
+                                                {% endif %}
+                                                {% if 208 in g.user.get_permission() %}
+                                                <li><a href="/user_stock_history_count_position"><i
+                                                    class="fa fa-briefcase"></i><span
+                                                    class="text"> 历史持仓统计 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 31 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-cny"></i><span class="text"> 用户提现管理 </span>
+                                                <span class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 32 in g.user.get_permission() %}
+                                                    <li><a href="/get_withdraw_apply_list"><i class="fa fa-th-list"></i><span
+                                                            class="text"> 申请中 </span></a></li>
+                                                {% endif %}
+                                                {% if 33 in g.user.get_permission() %}
+                                                    <li><a href="/get_withdraw_dealed_list"><i
+                                                            class="fa fa-th-list"></i><span
+                                                            class="text"> 处理中 </span></a></li>
+                                                {% endif %}
+                                                {% if 111 in g.user.get_permission() %}
+                                                    <li><a href="/get_withdraw_confirm_list"><i
+                                                            class="fa fa-th-list"></i><span class="text"> 已汇款待确认 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 34 in g.user.get_permission() %}
+                                                    <li><a href="/get_withdraw_finished"><i
+                                                            class="fa fa-th-list"></i><span
+                                                            class="text"> 处理完成 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 2 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-users"></i><span class="text"> 身份审核 </span>
+                                                <span class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 6 in g.user.get_permission() %}
+                                                    <li><a href="/user_unaudit"><i class="fa fa-user-md"></i><span
+                                                            class="text"> 未审核的用户 </span></a></li>
+                                                {% endif %}
+                                                    <li><a href="/get_fm_user_info"><i class="fa fa-user-md"></i><span
+                                                        class="text"> 审核到富明 </span></a></li>
+                                                {% if 7 in g.user.get_permission() %}
+                                                    <li><a href="/user_audit"><i class="fa fa-user-md"></i><span
+                                                            class="text"> 已审核的用户 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 97 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-pencil-square"></i><span
+                                                    class="text"> 用户反馈 </span><span
+                                                    class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                <li>
+                                                    {% if 89 in g.user.get_permission() %}
+                                                        <li><a href="/get_feedback_list"><i
+                                                                class="fa fa-question"></i><span
+                                                                class="text"> 用户反馈 </span></a></li>
+                                                    {% endif %}
+
+                                                <li><a href="/apm_data"><i class="fa fa-exclamation-triangle"></i><span
+                                                        class="text"> 监控记录 </span></a></li>
+                                                {% if 192 in g.user.get_permission() %}
+                                                    <li><a href="/get_remit_info_list"><i class="fa fa-dollar"></i>
+                                                        <span class="text"> 汇款人信息 </span></a></li>
+                                                {% endif %}
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 163 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-gamepad"></i><span class="text"> 活动 </span><span
+                                                    class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 165 in g.user.get_permission() %}
+                                                    <li><a href="/get_eggs_activity"><i class="fa fa-ge"></i><span
+                                                            class="text"> 彩蛋活动 </span></a></li>
+                                                {% endif %}
+                                                {% if 164 in g.user.get_permission() %}
+                                                    <li><a href="/super_agent"><i class="fa fa-child"></i><span
+                                                            class="text"> 超级经纪人 </span></a></li>
+                                                {% endif %}
+                                                {% if 169 in g.user.get_permission() %}
+                                                    <li><a href="/activity_list"><i class="fa fa-magnet"></i><span
+                                                            class="text"> 活动管理 </span></a></li>
+                                                {% endif %}
+                                                {% if 170 in g.user.get_permission() %}
+                                                    <li><a href="/prize_list"><i class="fa fa-magnet"></i><span
+                                                            class="text"> 奖品管理 </span></a></li>
+                                                {% endif %}
+                                                {% if 171 in g.user.get_permission() %}
+                                                    <li><a href="/free_interest_share_stat"><i class="fa fa-magnet"></i><span
+                                                            class="text"> 免息活动信息 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+
+                                        </li>
+                                    {% endif %}
+                                    {% if 196 in g.user.get_permission() %}
+                                    <li>
+                                        <a href="#"><i class="fa fa-hand-o-up"></i><span class="text"> 客服回访 </span><span
+                                        class="fa fa-angle-down pull-right"></span></a>
+                                        <ul class="nav sub">
+                                                {% if 197 in g.user.get_permission() %}
+                                                <li><a href="/get_verify_return_visit_list"><i class="fa fa-bullhorn"></i><span
+                                                    class="text"> 开户待回访 </span></a></li>
+                                                {% endif %}
+                                                {% if 198 in g.user.get_permission() %}
+                                                <li><a href="/get_sys_customer_ask_list"><i class="fa fa-bullhorn"></i><span
+                                                    class="text"> 注册待回访 </span></a></li>
+                                                {% endif %}
+
+
+                                        </ul>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+
+                            </li>
+                        {% endif %}
+                        {% if 95 in g.user.get_permission() %}
+                            <li>
+                                <a href="#"><i class="fa  fa-exchange"></i><span class="text"> 交易管理 </span> <span
+                                        class="fa fa-angle-down pull-right"></span></a>
+                                <ul class="nav sub">
+                                    {% if 98 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-cny"></i><span class="text"> 交易 </span> <span
+                                                    class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 67 in g.user.get_permission() %}
+                                                    <li><a href="/get_trade_statistics"><i
+                                                            class="fa fa-bar-chart-o"></i><span
+                                                            class="text"> 交易统计 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 99 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-chain"></i><span class="text"> 渠道统计 </span>
+                                                <span class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 125 in g.user.get_permission() %}
+                                                    <li><a href="/get_channel_detail_v2"><i
+                                                            class="fa fa-list-alt"></i><span class="text">  渠道统计</span></a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if 126 in g.user.get_permission() %}
+                                                    <li><a href="/get_channel_statistics_v2?direction=1"><i
+                                                            class="fa  fa-list"></i><span class="text"> 渠道明细 </span></a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if 127 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-paperclip"></i><span class="text"> 渠道交易 </span>
+                                                <span class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 128 in g.user.get_permission() %}
+                                                    <li><a href="/get_channel_trade_search_v2"><i
+                                                            class="fa fa-list-alt"></i><span class="text">  渠道交易</span></a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    <li>
+                                        <a href="#"><i class="fa fa-stack-overflow"></i><span class="text"> 渠道管理 </span><span
+                                                class="fa fa-angle-down pull-right"></span></a>
+                                        <ul class="nav sub">
+                                            <li><a href="/channel_list"><i class="fa fa-plus-square"></i><span
+                                                    class="text"> 添加渠道 </span><span
+                                                    class="fa fa-angle-down pull-right"></span></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if 209 in g.user.get_permission() %}
+                            <li>
+                                <a href="#"><i class="fa  fa-gamepad"></i><span class="text"> 活动管理 </span> <span
+                                        class="fa fa-angle-down pull-right"></span></a>
+                                <ul class="nav sub">
+                                    {% if 210 in g.user.get_permission() %}
+                                        <li>
+                                            <a href="#"><i class="fa fa-cny"></i><span class="text"> 金币竞猜 </span> <span
+                                                        class="fa fa-angle-down pull-right"></span></a>
+                                            <ul class="nav sub">
+                                                {% if 211 in g.user.get_permission() %}
+                                                    <li><a href="/get_prize_template_list"><i class="fa fa-gift"></i><span
+                                                                    class="text"> 奖品模版 </span></a></li>
+                                                {% endif %}
+                                                {% if 212 in g.user.get_permission() %}
+                                                <li><a href="/get_commodity_list"><i class="fa fa-gift"></i><span
+                                                                class="text"> 奖品历史 </span></a></li>
+                                                {% endif %}
+                                                {% if 213 in g.user.get_permission() %}
+                                                <li><a href="/get_exchange_history_list"><i class="fa fa-exchange"></i><span
+                                                                class="text"> 兑换列表 </span></a></li>
+                                                {% endif %}
+                                                {% if 214 in g.user.get_permission() %}
+                                                <li><a href="/get_quizzes_stock_list"><i class="fa fa-tasks"></i><span
+                                                                class="text"> 修改金币 </span></a></li>
+                                                {% endif %}
+                                                {% if 215 in g.user.get_permission() %}
+                                                <li><a href="/get_acti_stock_list"><i class="fa fa-tasks"></i><span
+                                                                class="text"> 股票筛选 </span></a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div>
+
+
+            </div>
+
+        </div>
+        <!-- end: Main Menu -->
+    </div>
+{% endblock %}

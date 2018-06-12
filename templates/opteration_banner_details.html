@@ -1,0 +1,162 @@
+{% extends "footer.html" %}
+{% block title %} 运营管理 {% endblock %}
+
+{% block content %}
+    <style>
+        .radio, .checkbox {
+            display: inline-block;
+        }
+    </style>
+    <div class="main sidebar-minified">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h4 class="page-header"><i class="fa fa-table"></i>banner</h4>
+            <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/">Home</a></li>
+                <li><i class="fa fa-table"></i>编辑banner</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2><i class="fa fa-indent red"></i><strong>banner信息</strong></h2>
+                </div>
+                <div class="panel-body">
+                    <input type="text" id="banner_id" value="{{ banner_detail.id }}" hidden>
+                    <form method="post" enctype="multipart/form-data" class="form-horizontal " id="uploadForm">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label " for="banner_url">banner图</label>
+                            <div class="col-md-6">
+                                <img class="img-thumbnail" src="{{ banner_detail.pic }}" alt="无图片" id="banner_url"
+                                     name="banner_url">
+                                <input id="fileupload" type="file" name="file" class="file-loading">
+                                <button type="submit" class="btn btn-success" style="height: 35px;">上传</button>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="/banner_details_edit" method="post" enctype="multipart/form-data"
+                          class="form-horizontal">
+                        <div class="form-group hide">
+                            <label class="control-label col-md-3 " for="btype">图片类型</label>
+                            <select id="btype" name="img_type" class="form-control col-sm-1"
+                                    style="margin-left: 13px; width: 20%">
+                                <option value="0" {% if banner_detail.btype == 0 %} selected {% endif %}>首页</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 " for="jtype">跳转链接</label>
+                            <div class="col-md-6">
+                                <td><input type="radio" name="jtype" value="0" checked/>新闻
+                                </td>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 " for="news_id">跳转选择</label>
+                            <select id="news_id" name="news_id" class="form-control col-sm-1"
+                                    style="margin-left: 13px; width: 20%">
+                                {% for news in banner_detail.news_list %}
+
+                                    <option value="{{ news.id }}" {% if news.id == banner_detail.jid %}
+                                            selected {% endif %}>{{ news.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 " for="status">状态</label>
+                            <div class="col-md-6">
+                                <td><input type="radio" name="status" value="2" checked> 隐藏</td>
+                                <td><input type="radio" name="status" value="1" {% if banner_detail.status == 1 %}
+                                           checked {% endif %}> 显示
+                                </td>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <button type="botton" class="btn btn-sm btn-primary" onclick="save_all()"><i
+                            class="fa fa-dot-circle-o"></i> 确定
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div><!--/.row-->
+
+
+{% endblock %}
+{% block js %}
+    <script src="/static/js/fileinput.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).on('ready', function () {
+            $("#fileupload").fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: "/", //上传的地址
+                showUpload: false, //是否显示上传按钮
+                allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],//接收的文件后缀
+                showCaption: false,
+                showPreview: true,
+                showRemove: false,
+                enctype: 'multipart/form-data',
+                browseClass: "btn btn-primary" //按钮样式
+            });
+        });
+
+        $("#uploadForm").submit(function (event) {
+            var formData = new FormData(this);
+            event.preventDefault();
+            $.ajax({
+                url: '/upload_banner_image',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.status == 0) {
+                        alert("success");
+                        $("#banner_url").attr('src', data.imgsrc);
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function () {
+                    alert("data-error");
+                }
+            });
+
+        });
+
+        function save_all() {
+            var banner_id = $("#banner_id").val();
+            var banner_url = $("#banner_url")[0].src;
+            var jtype = $("input[name='jtype']:checked").val();
+            var btype = $("#btype option:selected").val();
+            var news_id = $("#news_id option:selected").val();
+            var status = $('input[name="status"]:checked').val();
+            var params = {};
+            params["banner_id"] = banner_id;
+            params["btype"] = btype;
+            params["jtype"] = jtype;
+            params["banner_url"] = banner_url;
+            params["news_id"] = news_id;
+            params["status"] = status;
+            console.log(params);
+            $.post("/banner_details_edit", params, function (msg) {
+                alert(msg.message);
+                if (msg.status) {
+                    window.location.href = document.referrer;
+                }
+
+            })
+        }
+
+
+    </script>
+{% endblock %}

@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+__author__ = 'Andy'
+
+from flask.ext.sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from application import CreateApp
+import pymongo
+
+# app = CreateApp("configs.config.ProductConfig")
+app = CreateApp("configs.config.TestingConfig")
+
+mongo_url = app.config.get('MONGO_URL')
+mongo_database = app.config.get('MONGO_DATEBASE')
+mongo_db = pymongo.MongoClient(mongo_url)
+mongo_db = mongo_db[mongo_database]
+
+
+
+app.secret_key = "djafks#jfkda92=-("
+db = SQLAlchemy(app,use_native_unicode="utf8")
+lm = LoginManager()
+lm.init_app(app)
+lm.login_view = 'login'
+from auth import views
+from user_management import views
+from exchange_rate_management import views
+from backend_users import views
+from stock_management import views
+from withdraw_management import views
+from risk_management import views
+from user_trade import views
+from statistics_management import views
+from operation_management import views
+from upload import views
+from app_activity_online import views
+from channel_statistics import views
+from finance_management import views
+
+# # "webservice"
+# # from flask_restful import Api
+# from webservice.channel import Channel_Statis
+#
+# manage_api = Api(app)
+# manage_api.add_resource(Channel_Statis, "/api/v1/channel/channel_statis")
+
+
+

@@ -1,0 +1,309 @@
+{% extends "footer.html" %}
+{% block title %} 运营管理 {% endblock %}
+
+{% block content %}
+    <style>
+        .radio, .checkbox {
+            display: inline-block;
+        }
+    </style>
+    <div class="main sidebar-minified">
+    <div class="row">
+        <div class="col-lg-12">
+            <h4 class="page-header"><i class="fa fa-table"></i>新闻</h4>
+            <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="/">Home</a></li>
+                <li><i class="fa fa-table"></i>编辑新闻</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2><i class="fa fa-indent red"></i><strong>新闻信息</strong></h2>
+                </div>
+                <div class="panel-body">
+                    {# 隐藏域 #}
+                    <input type="text" id="news_id" value="{{ news_detail.id }}" hidden>
+                    {#主题图片#}
+                    <form method="post" enctype="multipart/form-data" class="form-horizontal" id="uploadForm">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label " for="small_pic">首页缩略图</label>
+                            <div class="col-md-6">
+                                <img class="img-thumbnail" src="{{ news_detail.small_pic }}" alt="no_image"
+                                     id="small_pic" name="small_pic">
+                                <input id="fileupload" type="file" name="file" class="file-loading">
+                                <button type="submit" class="btn btn-success" style="height: 35px;">点我上传</button>
+                            </div>
+                        </div>
+                        {#                            <div class="form-group">#}
+                        {#                                <label class="col-md-3 control-label " for="banner_url"></label>#}
+                        {#                                <div class="col-md-6">#}
+                        {#                                    <label for="" style="color: red;font-weight: bold">请确认图片名不包含中文</label>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+
+                    </form>
+
+
+                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="title" style="color: red;">标题</label>
+                            <div class="col-md-6">
+                                <input type="text" id="title" name="title" class="form-control" placeholder="标题"
+                                       onkeyup="check('sms_content','s_message')"
+                                       onkeydown="check('sms_content','s_message')"
+                                       value="{{ news_detail.title }}">
+                            </div>
+                        </div>
+                        <div class="form-group hide" id="title_hide">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-6">
+                                <span style="color: red"> 请输入新闻标题！</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="subtitle" style="color: red;">副标题</label>
+                            <div class="col-md-6">
+                                <input type="text" id="subtitle" name="subtitle" class="form-control" placeholder="副标题"
+                                       value="{{ news_detail.subtitle }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="author" style="color: red;">作者</label>
+                            <div class="col-md-6">
+                                <input type="text" id="author" name="author" class="form-control" placeholder="副标题"
+                                       value="{{ news_detail.author }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="desc" style="color: red;">描述</label>
+                            <div class="col-md-6">
+                                <input type="text" id="desc" name="desc" class="form-control" placeholder="描述"
+                                       value="{{ news_detail.desc }}">
+                            </div>
+                        </div>
+                        <div id="r_num" class="form-group">
+                            <label class="col-md-3 control-label" for="read_num">阅读次数</label>
+                            <div class="col-md-6">
+                                <input type="text" onblur="prom(this)" id="read_num" name="read_num"
+                                       class="form-control" placeholder="阅读次数" value="{{ news_detail.read_num }}">
+                            </div>
+                        </div>
+                        <div class="form-group hide" id="int_num">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-6">
+                                <span style="color: red"> 阅读数量为数字，请输入数字如:0,1,2,3...！！！</span>
+                            </div>
+                        </div>
+                        <div class="form-group hide" id="hi">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-6">
+                                <span style="color: red"> 标题最多显示40个字符，您输入的内容已经超出范围</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">内容</label>
+                            <div class="col-md-6">
+                                <script class="" id="editor" type="text/plain"
+                                        style="width:640px;height:300px"></script>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <button type="botton" class="btn btn-sm btn-primary" onclick="save_all()"><i
+                            class="fa fa-dot-circle-o"></i> 确定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+
+
+{% endblock %}
+{% block js %}
+    <script src="/static/js/fileinput.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/webeditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/webeditor/ueditor.all.min.js"></script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="/static/js/webeditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+
+        $(document).on('ready', function () {
+            $("#fileupload").fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: "/", //上传的地址
+                showUpload: false, //是否显示上传按钮
+                allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],//接收的文件后缀
+                showCaption: false,
+                showPreview: true,
+                showRemove: false,
+                enctype: 'multipart/form-data',
+                browseClass: "btn btn-primary" //按钮样式
+            });
+            $("#small_image_file").fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: "/", //上传的地址
+                showUpload: false, //是否显示上传按钮
+                allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],//接收的文件后缀
+                showCaption: false,
+                showPreview: true,
+                showRemove: false,
+                enctype: 'multipart/form-data',
+                browseClass: "btn btn-primary" //按钮样式
+            });
+
+
+        });
+        var ue = UE.getEditor('editor', {
+            serverUrl: "/upload/0",
+            toolbars: [[
+                'autotypeset', '|',
+                'bold', 'italic', 'underline',
+                'fontsize', 'forecolor', 'backcolor', '|',
+                'insertorderedlist',
+                'lineheight', '|',
+                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+                'insertimage', 'simpleupload', '|', 'undo', 'redo', 'source', 'link', 'unlink', 'emotion',
+                'fullscreen'
+            ]],
+            autoHeightEnabled: false,
+            catchRemoteImageEnable: false,
+            retainOnlyLabelPasted: true
+
+        });
+        var content = '{{ news_detail.content | safe}}';
+
+        function save_all() {
+            var title = $("#title").val();
+            var subtitle = $("#subtitle").val();
+            var author = $("#author").val();
+            var desc = $("#desc").val();
+            var content = UE.getEditor('editor').getContent();
+            var small_pic = $('#small_pic').attr('src');
+            var news_id = $('#news_id').val();
+            var read_num = $('#read_num').val();
+{#            var broadcast_type_id = $('#broadcast_type_id').val();#}
+{#            var small_pic = $('#image_path').val();#}
+            var params = {};
+            params["title"] = title;
+            params["subtitle"] = subtitle;
+            params["author"] = author;
+            params["content"] = content;
+            params["desc"] = desc;
+            params['small_pic'] = small_pic;
+            params['news_id'] = news_id;
+            params['read_num'] = read_num;
+            console.log(params);
+            if (title == '' || read_num == '' || content == '' || small_pic == '') {
+                alert('请检查播报的标题--阅读次数--内容是否正确输入！！！');
+                return false;
+            }
+
+            if (title && read_num && content && small_pic) {
+                $.post("/news_details_edit", params, function (msg) {
+                    alert(msg.message);
+                    if (msg.status) {
+                        window.location.href = document.referrer;
+                    }
+
+                })
+            }
+
+
+        }
+
+        $('#uploadForm').submit(function (event) {
+            var formData = new FormData(this);
+            event.preventDefault();
+            $.ajax({
+                url: "/upload_news_image",
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.status == 0) {
+                        alert('success');
+                        $('#small_pic').attr('src', data.imgsrc);
+                    } else {
+                        alert(data.message)
+                    }
+                },
+                error: function () {
+                    alert('data-error');
+                }
+            })
+        });
+
+        $("#upload_small_pic").submit(function (event) {
+            var formData = new FormData(this);
+            event.preventDefault();
+            $.ajax({
+                url: "/upload_news_image",
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.status == 0) {
+                        alert("success");
+                        $('#small_url').attr('src', data.imgsrc);
+                        $('#image_path').val(data.img_path);
+                    } else {
+                        alert(data.message)
+                    }
+                },
+                error: function () {
+                    alert("data-error")
+                }
+            })
+        });
+
+        function type_Change(ths) {
+            if (ths == 1) {
+                $('#uploadForm').addClass('hide');
+                $('#url_type').addClass('hide');
+                $('#jp_url').addClass('hide')
+            } else {
+                $('#uploadForm').removeClass('hide');
+                $('#url_type').removeClass('hide');
+                $('#jp_url').removeClass('hide')
+            }
+        }
+        function prom() {
+            var con = $('#read_num').val();
+            var con_int = Number(con);
+            if (!isNaN(con_int)) {
+                $('#int_num').addClass('hide')
+            } else {
+                $('#int_num').removeClass('hide')
+            }
+        }
+
+
+        function check(textareaName, spanName) {
+            var val_len = $('#title').val().length;
+            if (val_len > 40) {
+                document.getElementById('title').value = document.getElementById('title').value.substring(0, 40);
+                $('#hi').removeClass('hide');
+            } else {
+                $('#hi').addClass('hide');
+            }
+        }
+
+
+        $(document).ready(function () {
+
+            setTimeout(function () {
+                UE.getEditor('editor').setContent(content);
+            }, 1000);
+        });
+    </script>
+{% endblock %}

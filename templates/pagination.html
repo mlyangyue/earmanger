@@ -1,0 +1,70 @@
+{% if pagination.total_page %}
+    <ul class="pagination">
+    {% if pagination.page %}
+            <span style="color: #20A8D8;float: left;font-size: 14px;margin-right: 20px;margin-top: 5px" >共{{ pagination.total_page }}页({{ pagination.total }}条)</span>
+    {% endif %}
+        <li><a href="{{ page_url }}?page=1{{ pagination.page_serach }}">首页</a></li>
+        <li><a href="{{ page_url }}?page={% if pagination.page > 1 %}{{ pagination.page - 1 }}{% else %}{{ pagination.page }}{% endif %}{{ pagination.page_serach }}">上页</a></li>
+        {% for page in range(pagination.total_page) %}
+            {% if pagination.page - loop.index <= 2 and loop.index - pagination.page <= 2 %}
+                {% if loop.index == pagination.page %}
+                    <li class="active">
+                      <a href="{{ page_url }}?page={{ loop.index }}{{ pagination.page_serach }}">{{ loop.index }}</a>
+                    </li>
+                {% else %}
+                    <li><a href="{{ page_url }}?page={{ loop.index }}{{ pagination.page_serach }}">{{ loop.index }}</a></li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <li><a href="{{ page_url }}?page={% if pagination.page < pagination.total_page %}{{ pagination.page + 1 }}{% else %}{{ pagination.page }}{% endif %}{{ pagination.page_serach }}">下页</a></li>
+        <li><a href="{{ page_url }}?page={{ pagination.total_page }}{{ pagination.page_serach }}">末页</a></li>
+
+            <div class="input-group col-md-2" style="padding-left: 20px">
+                <input type="text" id="page_go" name="page_go" class="form-control" value="" placeholder="">
+                <input type="text" id="total_page" value="{{ pagination.total_page }}" hidden>
+                <input type="text" id="page_url" value="{{ page_url }}" hidden>
+                <span class="input-group-btn">
+                <button type="button" id="page_jump_go" class="btn btn-primary" onclick="GetNum()"><i class="fa fa-arrow-right"></i>
+{#                    页面跳转 要跳转的页面《 total_page  jump #}
+                    <a id="page_jump" href="" style="color: white">跳转</a></button>
+                </span>
+            </div>
+    </ul>
+{% endif %}
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var url = window.location.href;
+            var port = window.location.port;
+            var path = url.split(port);
+            if(path[1].indexOf('?') != -1){
+                var real_path = path[1].split('?');
+            }
+            $("a").each(function () {
+                var href = $(this).attr("href");
+                if(href == real_path[0]){
+                    $(this).parent().addClass("active opened");
+                    $(this).parent().parent().attr("style","display:block ");
+                    $(this).parent().parent().parent().addClass("opened");
+                    $(this).parent().parent().parent().parent().attr("style", "display:block");
+                    $(this).parent().parent().parent().parent().parent().addClass("opened");
+                }
+                console.log(href)
+            })
+        });
+        function GetNum() {
+            var num = $('#page_go').val();
+            var total_page = $('#total_page').val();
+            var page_url = $('#page_url').val();
+            console.log(num, total_page, page_url);
+            if(isNaN(num)){
+                alert('请输入数字！！！！');
+            }else {
+                if(parseInt(num) <= parseInt(total_page) && parseInt(num) >= 1){
+                    console.log(page_url+'?page='+num);
+                    $('#page_jump').attr('href', page_url+'?page='+num);
+                }
+            }
+        }
+    </script>
+{% endblock %}
