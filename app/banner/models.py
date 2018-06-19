@@ -137,7 +137,7 @@ class Banner:
 
 
 	@staticmethod
-	def edit_banner(banner_url="", btype=0, jtype=0, jump_url="", cur_time=0,banner_id=0,status=1):
+	def edit_banner(banner_url="", btype=0, jtype=0, jump_url="", cur_time=0,banner_id=0,status=1,jid=0):
 		try:
 			with app.app_context():
 				user_role = TbBanner.query.filter_by(id=banner_id).first()
@@ -147,7 +147,7 @@ class Banner:
 				user_role.url = jump_url
 				user_role.status = status
 				user_role.last_time = cur_time
-				user_role.jid = cur_time
+				user_role.jid = jid
 				db.session.commit()
 				pubtool.del_mobile_client_redis_banner()
 			return 0

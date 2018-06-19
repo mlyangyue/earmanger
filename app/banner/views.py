@@ -140,6 +140,7 @@ def __get_banner_info(banner_id):
 	banner_dict['url'] = banner.url
 	banner_dict["status"] = banner.status
 	banner_dict["jid"] = banner.jid
+	print banner.jid
 	return banner_dict
 
 
