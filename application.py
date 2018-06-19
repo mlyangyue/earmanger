@@ -10,6 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from cores.db import DB
 from sqlalchemy import create_engine
+from utils.util import pubtool
 from sqlalchemy.orm import *
 from utils.qiniuclient import QiNiuClient
 import contextlib
@@ -59,7 +60,7 @@ class CreateApp(Flask):
 	def init_log(self, loggerName, filename, during, interval=1):
 		import logging.handlers
 		import logging
-
+		pubtool.mkdir(loggerName)
 		log = logging.getLogger(loggerName)
 
 		fileTimeHandler = logging.handlers.TimedRotatingFileHandler(filename, during, interval, backupCount=10)
