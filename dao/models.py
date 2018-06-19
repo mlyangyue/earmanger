@@ -77,7 +77,7 @@ class TbNews(db.Model):
 	__tablename__ = "tb_news"
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	title = db.Column(db.VARCHAR(200))
-	subtitle = db.Column(db.VARCHAR(200))
+	subtitle = db.Column(db.VARCHAR(150))
 	tdate = db.Column(db.Integer)
 	desc = db.Column(db.VARCHAR(200))
 	content = db.Column(db.Text)
@@ -100,3 +100,35 @@ class TbRecommendFixed(db.Model):
 	recommend_news_id = db.Column(db.Integer)
 	status = db.Column(db.Integer)
 	weight = db.Column(db.Integer)
+
+
+class TbFastNews(db.Model):
+	__tablename__ = "tb_fast_news"
+	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	tdate = db.Column(db.Integer)
+	title = db.Column(db.VARCHAR(200))
+	subtitle = db.Column(db.VARCHAR(150))
+	desc = db.Column(db.VARCHAR(200))
+	content = db.Column(db.Text)
+	author = db.Column(db.VARCHAR(45))
+	weight = db.Column(db.Integer)
+	status = db.Column(db.Integer)
+	created_time = db.Column(db.Integer)
+	last_time = db.Column(db.Integer)
+	pub_time = db.Column(db.Integer, default=0)
+	share_count = db.Column(db.Integer, default=0)
+
+
+class TbTags(db.Model):
+	__tablename__ = "tb_tags"
+	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	name = db.Column(db.VARCHAR(45))
+	ptype = db.Column(db.Integer)
+
+class TbTagsRelation(db.Model):
+	__tablename__ = "tb_tag_relation"
+	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	r_id = db.Column(db.Integer)
+	tag_id = db.Column(db.Integer)
+	ptype = db.Column(db.Integer)
+

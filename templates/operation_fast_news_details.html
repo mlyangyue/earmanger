@@ -10,10 +10,10 @@
     <div class="main sidebar-minified">
     <div class="row">
         <div class="col-lg-12">
-            <h4 class="page-header"><i class="fa fa-table"></i>新闻</h4>
+            <h4 class="page-header"><i class="fa fa-table"></i>快讯</h4>
             <ol class="breadcrumb">
                 <li><i class="fa fa-home"></i><a href="/">Home</a></li>
-                <li><i class="fa fa-table"></i>编辑新闻</li>
+                <li><i class="fa fa-table"></i>编辑快讯</li>
             </ol>
         </div>
     </div>
@@ -22,40 +22,19 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2><i class="fa fa-indent red"></i><strong>新闻信息</strong></h2>
+                    <h2><i class="fa fa-indent red"></i><strong>快讯信息</strong></h2>
                 </div>
                 <div class="panel-body">
                     {# 隐藏域 #}
-                    <input type="text" id="news_id" value="{{ news_detail.id }}" hidden>
-                    {#主题图片#}
-                    <form method="post" enctype="multipart/form-data" class="form-horizontal" id="uploadForm">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label " for="small_pic">首页缩略图</label>
-                            <div class="col-md-6">
-                                <img class="img-thumbnail" src="{{ news_detail.small_pic }}" alt="no_image"
-                                     id="small_pic" name="small_pic">
-                                <input id="fileupload" type="file" name="file" class="file-loading">
-                                <button type="submit" class="btn btn-success" style="height: 35px;">点我上传</button>
-                            </div>
-                        </div>
-                        {#                            <div class="form-group">#}
-                        {#                                <label class="col-md-3 control-label " for="banner_url"></label>#}
-                        {#                                <div class="col-md-6">#}
-                        {#                                    <label for="" style="color: red;font-weight: bold">请确认图片名不包含中文</label>#}
-                        {#                                </div>#}
-                        {#                            </div>#}
-
-                    </form>
-
-
+                    <input type="text" id="fast_news_id" value="{{ fast_news_detail.id }}" hidden>
                     <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-md-3 control-label" for="title" >标题</label>
+                            <label class="col-md-3 control-label" for="title">标题</label>
                             <div class="col-md-6">
                                 <input type="text" id="title" name="title" class="form-control" placeholder="标题"
                                        onkeyup="check('sms_content','s_message')"
                                        onkeydown="check('sms_content','s_message')"
-                                       value="{{ news_detail.title }}">
+                                       value="{{ fast_news_detail.title }}">
                             </div>
                         </div>
                         <div class="form-group hide" id="title_hide">
@@ -65,31 +44,30 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" for="subtitle" >副标题</label>
+                            <label class="col-md-3 control-label" for="subtitle">副标题</label>
                             <div class="col-md-6">
                                 <input type="text" id="subtitle" name="subtitle" class="form-control" placeholder="副标题"
-                                       value="{{ news_detail.subtitle }}">
+                                       value="{{ fast_news_detail.subtitle }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" for="author" >作者</label>
+                            <label class="col-md-3 control-label" for="author">作者</label>
                             <div class="col-md-6">
                                 <input type="text" id="author" name="author" class="form-control" placeholder="作者"
-                                       value="{{ news_detail.author }}">
+                                       value="{{ fast_news_detail.author }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" for="desc" >描述</label>
+                            <label class="col-md-3 control-label" for="desc">描述</label>
                             <div class="col-md-6">
                                 <input type="text" id="desc" name="desc" class="form-control" placeholder="描述"
-                                       value="{{ news_detail.desc }}">
+                                       value="{{ fast_news_detail.desc }}">
                             </div>
                         </div>
-                        <div id="r_num" class="form-group">
-                            <label class="col-md-3 control-label" for="read_num">阅读次数</label>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="content">内容</label>
                             <div class="col-md-6">
-                                <input type="text" onblur="prom(this)" id="read_num" name="read_num"
-                                       class="form-control" placeholder="阅读次数" value="{{ news_detail.read_num }}">
+                                <textarea rows="8" cols="56" id="content" name="content">{{ fast_news_detail.content }}</textarea>
                             </div>
                         </div>
                         <div class="form-group hide" id="int_num">
@@ -105,13 +83,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">内容</label>
-                            <div class="col-md-6">
-                                <script class="" id="editor" type="text/plain"
-                                        style="width:640px;height:300px"></script>
-                            </div>
-                        </div>
+{#                        <div class="form-group">#}
+{#                            <label class="col-md-3 control-label">内容</label>#}
+{#                            <div class="col-md-6">#}
+{#                                <script class="" id="editor" type="text/plain"#}
+{#                                        style="width:640px;height:300px"></script>#}
+{#                            </div>#}
+{#                        </div>#}
 
                     </form>
                 </div>
@@ -147,17 +125,6 @@
                 enctype: 'multipart/form-data',
                 browseClass: "btn btn-primary" //按钮样式
             });
-            $("#small_image_file").fileinput({
-                language: 'zh', //设置语言
-                uploadUrl: "/", //上传的地址
-                showUpload: false, //是否显示上传按钮
-                allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg'],//接收的文件后缀
-                showCaption: false,
-                showPreview: true,
-                showRemove: false,
-                enctype: 'multipart/form-data',
-                browseClass: "btn btn-primary" //按钮样式
-            });
 
 
         });
@@ -178,36 +145,31 @@
             retainOnlyLabelPasted: true
 
         });
-        var content = '{{ news_detail.content | safe}}';
+        var content = '{{ fast_news_detail.content | safe}}';
 
         function save_all() {
             var title = $("#title").val();
             var subtitle = $("#subtitle").val();
             var author = $("#author").val();
             var desc = $("#desc").val();
-            var content = UE.getEditor('editor').getContent();
-            var small_pic = $('#small_pic').attr('src');
-            var news_id = $('#news_id').val();
-            var read_num = $('#read_num').val();
-{#            var broadcast_type_id = $('#broadcast_type_id').val();#}
-{#            var small_pic = $('#image_path').val();#}
+            var content = $("#content").val();
+{#            var content = UE.getEditor('editor').getContent();#}
+            var fast_news_id = $('#fast_news_id').val();
             var params = {};
             params["title"] = title;
             params["subtitle"] = subtitle;
             params["author"] = author;
             params["content"] = content;
             params["desc"] = desc;
-            params['small_pic'] = small_pic;
-            params['news_id'] = news_id;
-            params['read_num'] = read_num;
+            params['fast_news_id'] = fast_news_id;
             console.log(params);
-            if (title == '' || read_num == '' || content == '' || small_pic == '') {
-                alert('请检查播报的标题--阅读次数--内容是否正确输入！！！');
+            if (title == ''  || content  == '') {
+                alert('请检查播报的标题--内容是否正确输入！！！');
                 return false;
             }
 
-            if (title && read_num && content && small_pic) {
-                $.post("/news_details_edit", params, function (msg) {
+            if (title && content ) {
+                $.post("/fast_news_details_edit", params, function (msg) {
                     alert(msg.message);
                     if (msg.status) {
                         window.location.href = document.referrer;
@@ -223,7 +185,7 @@
             var formData = new FormData(this);
             event.preventDefault();
             $.ajax({
-                url: "/upload_news_image",
+                url: "/upload_fast_news_image",
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -242,29 +204,6 @@
             })
         });
 
-        $("#upload_small_pic").submit(function (event) {
-            var formData = new FormData(this);
-            event.preventDefault();
-            $.ajax({
-                url: "/upload_news_image",
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    if (data.status == 0) {
-                        alert("success");
-                        $('#small_url').attr('src', data.imgsrc);
-                        $('#image_path').val(data.img_path);
-                    } else {
-                        alert(data.message)
-                    }
-                },
-                error: function () {
-                    alert("data-error")
-                }
-            })
-        });
 
         function type_Change(ths) {
             if (ths == 1) {
@@ -299,11 +238,11 @@
         }
 
 
-        $(document).ready(function () {
-
-            setTimeout(function () {
-                UE.getEditor('editor').setContent(content);
-            }, 1000);
-        });
+{#        $(document).ready(function () {#}
+{##}
+{#            setTimeout(function () {#}
+{#                UE.getEditor('editor').setContent(content);#}
+{#            }, 1000);#}
+{#        });#}
     </script>
 {% endblock %}

@@ -123,5 +123,14 @@ class PublicTools:
 			python_redis_store.delete(nkey)
 		return True
 
+	@staticmethod
+	def del_mobile_client_redis_fast_news():
+		"""删除快讯相关的redis"""
+		all_keys = python_redis_store.keys()
+		news_keys = [key for key in all_keys if key.startswith("fast_news_list")]
+		for nkey in news_keys:
+			python_redis_store.delete(nkey)
+		return True
+
 
 pubtool = PublicTools

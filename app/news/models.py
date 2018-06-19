@@ -92,8 +92,8 @@ class News:
 		if not news_id:
 			return {}
 		try:
-			bannerobj = TbNews.query.filter_by(id=news_id).first()
-			return bannerobj
+			newsobj = TbNews.query.filter_by(id=news_id).first()
+			return newsobj
 		except Exception as error:
 			print error
 			logger.info("获取news详情出错 err={error}".format(error=error))
@@ -106,7 +106,7 @@ class News:
 			return newsobj.weight if newsobj else 0
 		except Exception as error:
 			print error
-			logger.info("获取banner权重出错 err={error}".format(error=error))
+			logger.info("获取news权重出错 err={error}".format(error=error))
 			return {}
 
 	@staticmethod
@@ -151,7 +151,7 @@ class News:
 			return 0
 		except Exception as error:
 			print error
-			logger.info("编辑banner出错 err={error}".format(error=error))
+			logger.info("编辑news出错 err={error}".format(error=error))
 			return error
 
 	@staticmethod

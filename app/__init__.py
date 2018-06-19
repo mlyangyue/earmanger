@@ -26,7 +26,9 @@ from auth import views
 from backend_users import views
 from banner import views
 from news import views
+from fast_news import views
 from news_recommend import views
+from news_tags import views
 from upload import views
 
 
