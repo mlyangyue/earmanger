@@ -40,7 +40,7 @@ class Banner:
 		except Exception as error:
 			print error
 			logger.info("获取banner列表出错 err={error}".format(error=error))
-			return []
+			return 0
 
 	@staticmethod
 	def banner_list_data(banner_type=None, index=1, limit=10):
