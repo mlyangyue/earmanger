@@ -24,6 +24,15 @@ def get_news_tags():
 	news_tags = NewsTags.get_news_tags(news_id=news_id)
 	return jsonify(news_tags=news_tags)
 
+@app.route('/get_common_news_tags', methods=['GET', 'POST'])
+@login_required
+def get_common_news_tags():
+	"""获取常用新闻标签"""
+	common_tags = NewsTags.get_common_news_tags(ptype=0)
+	return jsonify(common_tags=common_tags)
+
+
+
 @app.route('/save_news_tags', methods=['GET', 'POST'])
 @login_required
 def save_news_tags():

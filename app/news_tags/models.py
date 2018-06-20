@@ -5,6 +5,7 @@ __author__ = 'Andy'
 
 from app import app, db
 from dao.models import TbTags, TbTagsRelation
+from sqlalchemy import desc, and_, func, distinct
 import time
 import logging
 
@@ -57,3 +58,20 @@ class NewsTags:
 			print E
 			logger.info(E)
 			return str(E)
+
+	@staticmethod
+	def get_common_news_tags(ptype=0):
+		"""获取常用新闻标签,前十个"""
+		query = db.session.query(func.count(TbTagsRelation.id),TbTagsRelation.tag_id).filter(TbTagsRelation.ptype==ptype)
+		query = query.group_by(TbTagsRelation.tag_id).order_by(desc(func.count(TbTagsRelation.id))).limit(2)
+		tags_id = [tag[0] for tag in query]
+		if not tags_id:
+			return []
+		tags = TbTags.query.filter(TbTags.id.in_(tags_id))
+		tags_list = []
+		for tag in tags:
+			_dict = {}
+			_dict['id'] = tag.id
+			_dict['name'] = tag.name
+			tags_list.append(_dict)
+		return tags_list

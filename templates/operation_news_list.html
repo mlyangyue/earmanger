@@ -1,9 +1,22 @@
 {% extends "footer.html" %}
 {% block title %} 运营管理 {% endblock %}
 {% block content %}
+    <style>
+        span.tagstyle {
+            border-style: ridge;
+            border-radius: 5px;
+            border-color: #2b2b2b;
+            background-color: #BFDDE0;
+            display: inline-block;
+            margin-top: 5px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="static/css/jquery.tagsinput.css"/>
     <link rel="stylesheet" type="text/css"
           href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/start/jquery-ui.css"/>
+
     <div class="main sidebar-minified">
 
         <div class="row">
@@ -31,6 +44,15 @@
                             <table id="model_data"
                                    class="table table-striped table-bordered bootstrap-datatable datatable">
                             </table>
+                            <div style="width: 60%" id="default_tag">
+                                <p>常用标签</p>
+                                <span class="tagstyle" onclick="choose_tag('')">优秀的今天换标签</span>
+                                <span class="tagstyle">优秀的今天换标签</span>
+                                <span class="tagstyle">优秀的今天换标签</span>
+                                <span class="tagstyle">优秀的今天换标签</span>
+                                <span class="tagstyle">优秀的今天换标签</span>
+                            </div>
+                            <br>
                             <p>输入标签,完成敲回车</p>
                             <p><label>输入标签:</label>
                                 <input id="model_tags" type="text" class="tags" value="fa"/></p>
@@ -68,9 +90,9 @@
                         {#                                    <button type="submit" class="btn btn-primary" style="float: right"><i class="fa fa-search"></i> 查询</button>#}
                         {#                                </div>#}
                         {#                            </form>#}
-                        <button class="btn btn-success" style="float: right;margin-left: 10px;margin-bottom: 10px"
-                                onclick="save_weight()"><i class="fa fa-save"></i> 保存权重
-                        </button>
+{#                        <button class="btn btn-success" style="float: right;margin-left: 10px;margin-bottom: 10px"#}
+{#                                onclick="save_weight()"><i class="fa fa-save"></i> 保存权重#}
+{#                        </button>#}
 
                         <table class="table table-striped table-bordered bootstrap-datatable datatable" id="table_data"
                                style="table-layout:fixed;">
@@ -82,7 +104,7 @@
                                 <th>作者</th>
                                 <th>预览</th>
                                 <th>状态</th>
-                                <th>权重</th>
+{#                                <th>权重</th>#}
                                 <th>发布时间</th>
                                 <th style="width: 20%">操作</th>
                             </tr>
@@ -129,7 +151,7 @@
                         html += '<span style="color:red">隐藏</span>'
                     }
                     html += '</td>';
-                    html += '<td><input type="text" id="weight_' + news_list[i]['id'] + '" value="' + news_list[i]['weight'] + '" style="width: 40%" </td>';
+{#                    html += '<td><input type="text" id="weight_' + news_list[i]['id'] + '" value="' + news_list[i]['weight'] + '" style="width: 40%" </td>';#}
                     html += '<td>' + news_list[i]['pub_time'] + '</td>';
                     html += "<td>";
                     if (news_list[i]["status"] == "0") {
@@ -219,6 +241,24 @@
         }
         function show_fin(news_id) {
             var _id = news_id;
+            var html = "";
+            var url = "/get_common_news_tags";
+            var params = {};
+            html += '<p>常用标签</p>';
+            $.post(
+                    url,
+                    params,
+                    function (res) {
+                        var common_tags = res.common_tags;
+                        for(var i=0;i<common_tags.length;i++){
+                            html += '<span class="tagstyle" onclick="choose_tag(\''+common_tags[i]["name"]+'\')">'+common_tags[i]["name"]+'</span>';
+                        }
+                        console.log(html);
+                        $("#default_tag").html(html);
+                    }
+            );
+
+
             tagstr = "";
             $('#model_tags').tagsInput({width: 'auto'});
             $('#model_tags').tagsInput({onAddTag: onAddTag(_id)});
@@ -240,6 +280,15 @@
                 }
             });
 
+        }
+        function choose_tag(tag_name) {
+            var res  = $('#model_tags').tagExist(tag_name);
+            if (res){
+                //不存在才添加,存在不添加
+                alert(tag_name+" 标签已添加");
+                return false;
+            }
+            $('#model_tags').addTag(tag_name);
         }
         $(function () {
             {#            $('#tags_1').tagsInput({width: 'auto'});#}
