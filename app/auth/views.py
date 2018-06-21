@@ -27,19 +27,19 @@ def load_user(id):
 
 @app.before_request
 def before_request():
-	if "login" not in request.full_path and "logout" not in request.full_path and "get_risk_timer" not in request.full_path and "/static/" not in request.full_path:
+	if "login" not in request.full_path and "logout" not in request.full_path and "/static/" not in request.full_path:
 		g.user = current_user
 		if hasattr(g.user,"username") is False:
 			return render_template("login.html", params={})
 		user_name = g.user.username
-		recheck = python_redis_store.hget('htg_backend_login', user_name)
+		recheck = python_redis_store.hget('itear_backend_login', user_name)
 		if not recheck:
 			return render_template("login.html", params={})
 		last_login_time = int(recheck)
 		cur_time = int(time.time())
 		if cur_time > last_login_time + 3600:
 			return render_template("login.html", params={})
-		python_redis_store.hset('htg_backend_login', user_name, cur_time)
+		python_redis_store.hset('itear_backend_login', user_name, cur_time)
 
 
 @app.errorhandler(404)
@@ -65,12 +65,11 @@ def login():
 		password = PublicTools.md5gen(password)
 		with db_manager.session_ctx(bind='backendrdb') as session:
 			user = session.query(User).filter(User.username==username,User.status==1).first()
-		if user is not None or user is None:
+		if user is not None and user.password==password:
 			login_user(user)
 			# 用户权限放进session
 			ip = request.remote_addr
-			logger.info("--%s--%s---- logining" % (username, ip))
-			python_redis_store.hset('htg_backend_login', username, int(time.time()))
+			python_redis_store.hset('itear_backend_login', username, int(time.time()))
 			return redirect(url_for("index"))
 		else:
 			error = u"用户名或密码错误"
@@ -84,7 +83,6 @@ def login():
 @login_required
 def index():
 	ip = request.remote_addr
-
 	return render_template("footer.html")
 
 
