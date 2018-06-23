@@ -14,10 +14,8 @@ import os
 from utils.timetools import TimeTools
 from utils.util import pubtool
 from werkzeug.utils import secure_filename
-from configs.constants import NEWSURL
-from application import quote_reids_store,qn
+from application import qn
 IMAGE_DIR = app.config.get("IMAGE_DIR")
-IMAGE_SERVER = app.config.get("IMAGE_SERVER")
 
 logger = logging.getLogger("views")
 tt = TimeTools()
@@ -216,5 +214,4 @@ def upload_news_image():
 	local_file = save_path + "/" + filename
 	f.save(local_file)
 	imgsrc = qn.upload(qiniu_name=filename,local_file=local_file)
-	# imgsrc = IMAGE_SERVER + "/" + _path + "/" + filename
 	return jsonify(message="success", status=0, imgsrc=imgsrc)

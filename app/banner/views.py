@@ -15,13 +15,12 @@ import logging
 from utils.timetools import TimeTools
 from utils.util import pubtool
 from werkzeug.utils import secure_filename
-from application import quote_reids_store, qn
+from application import qn
 
 logger = logging.getLogger("views")
 tt = TimeTools()
 limit = 10
 IMAGE_DIR = app.config.get("IMAGE_DIR")
-IMAGE_SERVER = app.config.get("IMAGE_SERVER")
 
 
 def get_total_page(total, limit):
@@ -182,13 +181,13 @@ def banner_details_edit():
 		last_weight = Banner.get_banner_weight(btype=btype)
 		weight = last_weight + 1
 		addstatus = Banner.add_banner(banner_url=banner_url, btype=btype, jtype=jtype, jump_url=jump_url,
-		                                 weight=weight, cur_time=cur_time,jid=news_id, status=status)
+		                              weight=weight, cur_time=cur_time, jid=news_id, status=status)
 		if addstatus:
 			return jsonify(message=addstatus, status=0)
 	elif banner_id > 0:
 		editstatus = Banner.edit_banner(banner_url=banner_url, btype=btype, jtype=0, jump_url=jump_url,
-		                                   banner_id=banner_id, cur_time=cur_time,jid=news_id,
-		                                   status=status)
+		                                banner_id=banner_id, cur_time=cur_time, jid=news_id,
+		                                status=status)
 		if editstatus:
 			return jsonify(message=editstatus, status=0)
 	else:
@@ -216,5 +215,4 @@ def upload_banner_image():
 	local_file = save_path + "/" + filename
 	f.save(local_file)
 	imgsrc = qn.upload(qiniu_name=filename, local_file=local_file)
-	# imgsrc = IMAGE_SERVER + "/" + _path + "/" + filename
 	return jsonify(message="success", status=0, imgsrc=imgsrc)

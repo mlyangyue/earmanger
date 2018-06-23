@@ -8,7 +8,6 @@ from dao.models import TbBanner
 from sqlalchemy import desc, and_
 import logging
 from flask import g
-from application import quote_reids_store
 from utils.util import pubtool
 
 logger = logging.getLogger("sql")

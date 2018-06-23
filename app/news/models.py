@@ -9,7 +9,6 @@ from sqlalchemy import desc, and_
 import time
 import logging
 from flask import g
-from application import quote_reids_store
 from utils.util import pubtool
 from configs.constants import NEWSURL
 
