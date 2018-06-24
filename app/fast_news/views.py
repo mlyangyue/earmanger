@@ -172,7 +172,8 @@ def fast_news_details_edit():
 	if fast_news_id == 0:
 		# 新增banner
 		last_weight = FastNews.get_fast_news_weight()
-		weight = last_weight + 1
+		weight = 0
+		#weight = last_weight + 1
 		addstatus = FastNews.add_fast_news(title=title, subtitle=subtitle, author=author,tdate=tdate, cur_time=cur_time,
 				              desc=desc, content=content,weight=weight)
 		if addstatus:

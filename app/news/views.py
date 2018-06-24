@@ -179,7 +179,8 @@ def news_details_edit():
 	if news_id == 0:
 		# 新增news
 		last_weight = News.get_news_weight()
-		weight = last_weight + 1
+		weight = 0
+		# weight = last_weight + 1
 		addstatus = News.add_news(title=title, subtitle=subtitle, author=author, read_num=read_num,tdate=tdate, cur_time=cur_time,
 				              desc=desc, content=content,weight=weight,small_pic=small_pic)
 		if addstatus:
