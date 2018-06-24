@@ -12,10 +12,10 @@ import pymongo
 
 # app = CreateApp("configs.config.ProductConfig")
 app = CreateApp("configs.config.TestingConfig")
-mongo_url = app.config.get('MONGO_URL')
-mongo_database = app.config.get('MONGO_DATEBASE')
-mongo_db = pymongo.MongoClient(mongo_url)
-mongo_db = mongo_db[mongo_database]
+# mongo_url = app.config.get('MONGO_URL')
+# mongo_database = app.config.get('MONGO_DATEBASE')
+# mongo_db = pymongo.MongoClient(mongo_url)
+# mongo_db = mongo_db[mongo_database]
 
 app.secret_key = "djafks#jfkda92=-("
 db = SQLAlchemy(app,use_native_unicode="utf8")

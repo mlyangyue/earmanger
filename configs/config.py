@@ -65,7 +65,7 @@ class ProductConfig(Config):
 	PORT = 5001
 	DEBUG = False
 	# PYTHON reids
-	PYTHON_REDIS_URL = "redis://192.168.6.78:6379/0"
+	PYTHON_REDIS_URL = "redis://127.0.0.1:6379/0"
 	# 后台数据库地址
 	SQLALCHEMY_DATABASE_URI = "mysql://iterduo:iterduo@114.24.72.141:3306/earfin"
 	# 图片服务器
