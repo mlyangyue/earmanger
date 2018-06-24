@@ -132,11 +132,11 @@
                     html += '</td>';
                     html += "<td>";
                     if (banner_list[i]["status"] == "1") {
-                        html += '<a class="btn btn-success" href="#" title="隐藏" onclick="update_banner_status(' + banner_list[i]['id'] + ',2)"> <i class="fa fa-eye-slash"></i></a>'
+                        html += '<a class="btn btn-success" href="" title="隐藏" onclick="update_banner_status(' + banner_list[i]['id'] + ',2)"> <i class="fa fa-eye-slash"></i></a>'
                     } else if (banner_list[i]["status"] == "2") {
-                        html += '<a class="btn btn-success" href="#" title="显示" onclick="update_banner_status(' + banner_list[i]['id'] + ',1)"> <i class="fa fa-eye"></i></a>'
+                        html += '<a class="btn btn-success" href="" title="显示" onclick="update_banner_status(' + banner_list[i]['id'] + ',1)"> <i class="fa fa-eye"></i></a>'
                     }
-                    html += '<a class="btn btn-danger" style="margin-left:10px" href="#" title="删除" onclick="del_banner(' + banner_list[i]['id'] + ')"> <i class="fa fa-trash-o "></i></a>';
+                    html += '<a class="btn btn-danger" style="margin-left:10px" href="" title="删除" onclick="del_banner(' + banner_list[i]['id'] + ')"> <i class="fa fa-trash-o "></i></a>';
                     html += '<a class="btn btn-info" style="margin-left:10px" href="/get_banner_details?banner_id=' + banner_list[i]['id'] + '" title="删除"> <i class="fa fa-edit "></i></a>';
                     html += '</td>';
                     html += '</tr>';

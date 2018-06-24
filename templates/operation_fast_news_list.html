@@ -99,13 +99,13 @@
                     html += '<td>' + fast_news_list[i]['pub_time'] + '</td>';
                     html += "<td>";
                     if (fast_news_list[i]["status"] == "0") {
-                        html += '<a class="btn btn-success" href="#" title="发布" onclick="update_fast_news_status(' + fast_news_list[i]['id'] + ',1)"> <i class="fa fa-eye"></i></a>'
+                        html += '<a class="btn btn-success" href="" title="发布" onclick="update_fast_news_status(' + fast_news_list[i]['id'] + ',1)"> <i class="fa fa-eye"></i></a>'
                     } else if (fast_news_list[i]["status"] == "1") {
-                        html += '<a class="btn btn-warning" href="#" title="隐藏" onclick="update_fast_news_status(' + fast_news_list[i]['id'] + ',2)"> <i class="fa fa-eye-slash"></i></a>'
+                        html += '<a class="btn btn-warning" href="" title="隐藏" onclick="update_fast_news_status(' + fast_news_list[i]['id'] + ',2)"> <i class="fa fa-eye-slash"></i></a>'
                     } else if (fast_news_list[i]["status"] == "2") {
-                        html += '<a class="btn btn-success" href="#" title="发布" onclick="update_fast_news_status(' + fast_news_list[i]['id'] + ',1)"> <i class="fa fa-eye-slash"></i></a>'
+                        html += '<a class="btn btn-success" href="" title="发布" onclick="update_fast_news_status(' + fast_news_list[i]['id'] + ',1)"> <i class="fa fa-eye-slash"></i></a>'
                     }
-                    html += '<a class="btn btn-danger" style="margin-left:10px" href="#" title="删除" onclick="del_fast_news(' + fast_news_list[i]['id'] + ')"> <i class="fa fa-trash-o "></i></a>';
+                    html += '<a class="btn btn-danger" style="margin-left:10px" href="" title="删除" onclick="del_fast_news(' + fast_news_list[i]['id'] + ')"> <i class="fa fa-trash-o "></i></a>';
                     html += '<a class="btn btn-info" style="margin-left:10px" href="/get_fast_news_details?fast_news_id=' + fast_news_list[i]['id'] + '" title="编辑"> <i class="fa fa-edit "></i></a>';
 {#                    html += '<a class="btn btn-info"  href="/get_recommend_fixed?news_id=' + news_list[i]['id'] + '" title="相关推荐"> <i class="fa fa-tags "></i></a>';#}
                     html += '</td>';
