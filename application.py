@@ -60,8 +60,8 @@ class CreateApp(Flask):
 		import logging.handlers
 		import logging
 		from utils.util import pubtool
-		print "logpath",loggerName
-		pubtool.mkdir(loggerName)
+		print "logpath",filename
+		pubtool.mkdir(filename)
 		log = logging.getLogger(loggerName)
 
 		fileTimeHandler = logging.handlers.TimedRotatingFileHandler(filename, during, interval, backupCount=10)
