@@ -60,6 +60,7 @@ class CreateApp(Flask):
 		import logging.handlers
 		import logging
 		from utils.util import pubtool
+		print "logpath",loggerName
 		pubtool.mkdir(loggerName)
 		log = logging.getLogger(loggerName)
 
