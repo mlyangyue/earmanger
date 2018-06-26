@@ -6,4 +6,4 @@ __author__ = 'Andy'
 CRYPTE  = "jiami_rand123"
 
 """新闻url"""
-NEWSURL = "http://118.24.72.141/earfinance/earFinance.html?newsId="
+NEWSURL = "http://www.iterduo.cn:5001/earfinance/earFinance.html?newsId="
