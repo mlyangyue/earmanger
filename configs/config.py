@@ -45,15 +45,11 @@ class TestingConfig(Config):
 
 	# PYTHON reids
 	PYTHON_REDIS_URL = "redis://127.0.0.1:6379/0"
-	# 行情 备份 redis
-	REDIS_QUOTE_BACKUP_URL = "redis://127.0.0.1:6379/0"
 	# 后台数据库地址
 	SQLALCHEMY_DATABASE_URI = "mysql://root:000000@127.0.0.1:3306/earfin"
 	# SQLALCHEMY_DATABASE_URI = "mysql://root:000000@114.24.72.141:3306/earfin"
 	# 图片服务器
 	IMAGE_DIR = "/Users/wangranming/share/images"
-	MESSAGE_SEVER = "http://127.0.0.1:8222"
-	PYTHON_SERVER = "http://127.0.0.1:8888"
 
 	SQLALCHEMY_BINDS = {
 		'backendrdb': "mysql://root:000000@127.0.0.1:3306/earfin",#后台读库

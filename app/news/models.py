@@ -33,7 +33,7 @@ class News:
 			query = TbNews.query
 			if status is not None:
 				query = query.filter(TbNews.status == status)
-			query = query.order_by(desc(TbNews.weight)).paginate(index, limit).items
+			query = query.order_by(desc(TbNews.weight)).order_by(desc(TbNews.id)).paginate(index, limit).items
 			return query
 		except Exception as error:
 			print error

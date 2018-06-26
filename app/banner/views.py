@@ -169,7 +169,7 @@ def banner_details_edit():
 	banner_url = info.get("banner_url")
 	btype = int(info.get("btype", 0))
 	jtype = int(info.get("jtype", 0))
-	news_id = int(info.get("news_id", 0))
+	news_id = int(info.get("news_id", 0)) if info.get("news_id", 0) else ''
 	status = int(info.get('status', 0))
 	cur_time = int(time.time())
 	jump_url = ''
