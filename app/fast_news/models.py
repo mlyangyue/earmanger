@@ -34,7 +34,7 @@ class FastNews:
 			query = TbFastNews.query
 			if status is not None:
 				query = query.filter(TbFastNews.status == status)
-			query = query.order_by(desc(TbFastNews.weight)).paginate(index, limit).items
+			query = query.order_by(desc(TbFastNews.weight)).order_by(desc(TbFastNews.id)).paginate(index, limit).items
 			return query
 		except Exception as error:
 			print error
