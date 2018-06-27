@@ -109,7 +109,7 @@ class PublicTools:
 	def del_mobile_client_redis_banner():
 		"""删除banner相关的redis"""
 		all_keys = python_redis_store.keys()
-		banner_keys = [key for key in all_keys if key.startswith("banner_list")]
+		banner_keys = [key for key in all_keys if key.startswith("banner_")]
 		for bkey in banner_keys:
 			python_redis_store.delete(bkey)
 		return True
