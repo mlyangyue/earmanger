@@ -63,6 +63,11 @@ def login():
 		username = request.form['username']
 		password = request.form['password']
 		password = PublicTools.md5gen(password)
+		try:
+			with db_manager.session_ctx(bind='backendrdb') as session:
+				user = session.query(User).filter(User.username==username,User.status==1).first()
+		except Exception as E:
+			logger.error("login err= error".format(error=E))
 		with db_manager.session_ctx(bind='backendrdb') as session:
 			user = session.query(User).filter(User.username==username,User.status==1).first()
 		if user is not None and user.password==password:
