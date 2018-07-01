@@ -30,7 +30,7 @@ class Config():
 	QINIU = {
 		"access_key":"HZLRx-_I8byU84yRe5HYNjjAdWSfsnFS_jdLE1An",
 		"secret_key":"WWW3riM45S-iXSpvM9maAE0wipnK56Mvr9r2-n9K",
-		"bucket_name":"iterduoapp",
+		"bucket_name":"iterduo",
 		"qn_domain_name":"http://pawtn3z0h.bkt.clouddn.com/"
 	}
 	template_folder = 'templates'
