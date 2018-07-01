@@ -118,7 +118,7 @@ class PublicTools:
 	def del_mobile_client_redis_news():
 		"""删除news相关的redis"""
 		all_keys = python_redis_store.keys()
-		news_keys = [key for key in all_keys if key.startswith("news_list")]
+		news_keys = [key for key in all_keys if key.startswith("news_")]
 		for nkey in news_keys:
 			python_redis_store.delete(nkey)
 		return True
@@ -127,7 +127,7 @@ class PublicTools:
 	def del_mobile_client_redis_fast_news():
 		"""删除快讯相关的redis"""
 		all_keys = python_redis_store.keys()
-		news_keys = [key for key in all_keys if key.startswith("fast_news_list")]
+		news_keys = [key for key in all_keys if key.startswith("fast_news")]
 		for nkey in news_keys:
 			python_redis_store.delete(nkey)
 		return True
