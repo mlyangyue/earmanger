@@ -70,6 +70,7 @@ def banner_list_data():
 		_dict['btype'] = banner.btype
 		_dict['weight'] = banner.weight
 		_dict['jtype'] = banner.jtype
+		_dict['title'] = banner.title
 		_dict['status'] = banner.status
 		_dict['created_time'] = banner.created_time
 		_dict['last_time'] = banner.last_time
@@ -139,7 +140,7 @@ def __get_banner_info(banner_id):
 	banner_dict['url'] = banner.url
 	banner_dict["status"] = banner.status
 	banner_dict["jid"] = banner.jid
-	print banner.jid
+	banner_dict["title"] = banner.title
 	return banner_dict
 
 
@@ -171,6 +172,7 @@ def banner_details_edit():
 	jtype = int(info.get("jtype", 0))
 	news_id = int(info.get("news_id", 0)) if info.get("news_id", 0) else 0
 	status = int(info.get('status', 0))
+	title = info.get('banner_title', '')
 	cur_time = int(time.time())
 	jump_url = ''
 	if news_id:
@@ -181,13 +183,13 @@ def banner_details_edit():
 		last_weight = Banner.get_banner_weight(btype=btype)
 		weight = last_weight + 1
 		addstatus = Banner.add_banner(banner_url=banner_url, btype=btype, jtype=jtype, jump_url=jump_url,
-		                              weight=weight, cur_time=cur_time, jid=news_id, status=status)
+		                              weight=weight, cur_time=cur_time, jid=news_id, status=status,title=title)
 		if addstatus:
 			return jsonify(message=addstatus, status=0)
 	elif banner_id > 0:
 		editstatus = Banner.edit_banner(banner_url=banner_url, btype=btype, jtype=0, jump_url=jump_url,
 		                                banner_id=banner_id, cur_time=cur_time, jid=news_id,
-		                                status=status)
+		                                status=status,title=title)
 		if editstatus:
 			return jsonify(message=editstatus, status=0)
 	else:

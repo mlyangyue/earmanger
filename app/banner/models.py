@@ -120,11 +120,11 @@ class Banner:
 			return {}
 
 	@staticmethod
-	def add_banner(banner_url="", btype=0, jtype=0, jump_url="", weight=0, cur_time=0,jid=0,version_type=0,status=1):
+	def add_banner(banner_url="", btype=0, jtype=0, jump_url="", weight=0, cur_time=0,jid=0,version_type=0,status=1,title=""):
 		try:
 			with app.app_context():
 				banner = TbBanner(btype=btype, jtype=jtype, url=jump_url, pic=banner_url, weight=weight,
-				                  created_time=cur_time,last_time=cur_time, status=status,jid=jid)
+				                  created_time=cur_time,last_time=cur_time, status=status,jid=jid,title=title)
 				db.session.add(banner)
 				db.session.commit()
 				pubtool.del_mobile_client_redis_banner()
@@ -136,7 +136,7 @@ class Banner:
 
 
 	@staticmethod
-	def edit_banner(banner_url="", btype=0, jtype=0, jump_url="", cur_time=0,banner_id=0,status=1,jid=0):
+	def edit_banner(banner_url="", btype=0, jtype=0, jump_url="", cur_time=0,banner_id=0,status=1,jid=0,title=""):
 		try:
 			with app.app_context():
 				user_role = TbBanner.query.filter_by(id=banner_id).first()
@@ -147,6 +147,7 @@ class Banner:
 				user_role.status = status
 				user_role.last_time = cur_time
 				user_role.jid = jid
+				user_role.title = title
 				db.session.commit()
 				pubtool.del_mobile_client_redis_banner()
 			return 0

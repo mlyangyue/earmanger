@@ -71,6 +71,7 @@ class TbBanner(db.Model):
 	created_time = db.Column(db.Integer)
 	last_time = db.Column(db.Integer)
 	jid = db.Column(db.Integer)
+	title = db.Column(db.VARCHAR(200))
 
 
 class TbNews(db.Model):

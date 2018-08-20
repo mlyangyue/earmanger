@@ -27,8 +27,14 @@
                 </div>
                 <div class="panel-body">
                     <input type="text" id="banner_id" value="{{ banner_detail.id }}" hidden>
-                    <form method="post" enctype="multipart/form-data" class="form-horizontal " id="uploadForm">
-                        <div class="form-group">
+
+                    <form action="/banner_details_edit" method="post" enctype="multipart/form-data"
+                          class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 " for="status">标题</label>
+                        <input type="text" id="banner_title" value="{{ banner_detail.title }}">
+                    </div>
+                    <div class="form-group">
                             <label class="col-md-3 control-label " for="banner_url">banner图</label>
                             <div class="col-md-6" style="font-size:14px;overflow: hidden">
                                 <img class="img-thumbnail" src="{{ banner_detail.pic }}" alt="无图片" id="banner_url"
@@ -37,9 +43,6 @@
                                 <button type="submit" class="btn btn-success" style="height: 35px;">上传</button>
                             </div>
                         </div>
-                    </form>
-                    <form action="/banner_details_edit" method="post" enctype="multipart/form-data"
-                          class="form-horizontal">
                         <div class="form-group hide">
                             <label class="control-label col-md-3 " for="btype">图片类型</label>
                             <select id="btype" name="img_type" class="form-control col-sm-1"
@@ -140,6 +143,7 @@
 
         function save_all() {
             var banner_id = $("#banner_id").val();
+            var banner_title = $("#banner_title").val();
             var banner_url = $("#banner_url")[0].src;
 {#            var jtype = $("input[name='jtype']:checked").val();#}
             var jtype = 0
@@ -148,6 +152,7 @@
             var status = $('input[name="status"]:checked').val();
             var params = {};
             params["banner_id"] = banner_id;
+            params["banner_title"] = banner_title;
             params["btype"] = btype;
             params["jtype"] = jtype;
             params["banner_url"] = banner_url;

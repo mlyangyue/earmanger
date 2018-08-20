@@ -27,28 +27,6 @@
                         </div>
                     </div>
 
-                    <div class="panel-body">
-                        {% if 73 in g.user.get_permission() %}
-                            <form action="" method="post" class="form-horizontal ">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-1 " for="banner_type">banner类型</label>
-                                    <select id="banner_type" name="banner_type" class="form-control col-sm-1"
-                                            style="margin-left: 13px; width: 20%">
-                                        <option value="">请选择</option>
-                                        <option value="0" {% if params.banner_type == "0" %} selected {% endif %}>动态
-                                        </option>
-                                        <option value="3" {% if params.banner_type == "3" %} selected {% endif %}>
-                                            超级经济人
-                                        </option>
-                                        <option value="4" {% if params.banner_type == '4' %} selected {% endif %}>签到图片
-                                        </option>
-                                    </select>
-                                    <button type="submit" class="btn btn-primary" style="float: right"><i
-                                            class="fa fa-search"></i> 查询
-                                    </button>
-                                </div>
-                            </form>
-                        {% endif %}
                         <button class="btn btn-success" style="float: right;margin-left: 10px;margin-bottom: 10px"
                                 onclick="save_weight()"><i class="fa fa-save"></i> 保存权重
                         </button>
@@ -60,9 +38,10 @@
                                 <th style="width: 10%;">BannerID</th>
                                 <th style="width: 15%;">图片路径</th>
                                 <th style="width: 15%;">跳转路径</th>
-                                <th style="width: 15%">类型</th>
+                                <th style="width: 5%">类型</th>
                                 <th style="width: 10%">权重</th>
-                                <th>状态</th>
+                                <th style="width: 15%">标题</th>
+                                <th style="width: 5%">状态</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -123,6 +102,7 @@
                         html += '<td>其他</td>';
                     }
                     html += '<td><input type="text" id="weight_' + banner_list[i]['id'] + '" value="' + banner_list[i]['weight'] + '" style="width: 40%" </td>';
+                    html += '<td><span>'+banner_list[i]["title"]+'</span></td>';
                     html += '<td>';
                     if (banner_list[i]['status'] == 1) {
                         html += '<span style="color:green">显示</span>'
